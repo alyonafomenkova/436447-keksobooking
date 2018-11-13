@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алёна Фоменкова](https://up.htmlacademy.ru/javascript/16/user/436447).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Рубец](https://up.htmlacademy.ru/javascript/16/user/41580).
 
 ---
 
