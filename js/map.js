@@ -30,7 +30,7 @@ var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 
 function getAvatarUrlByIndex(index) {
-  var avatarUrl = 'img/avatars/user0' + index + '.png';
+  var avatarUrl = 'img/avatars/user0${index}.png';
   return avatarUrl;
 }
 
@@ -40,20 +40,27 @@ function randomInteger(min, max) {
   return rand;
 }
 
+function randomString(arr) {
+  var rand = Math.floor(Math.random() * arr.length);
+  return arr[rand];
+}
+
 function shuffle(arr) {
+  var out = arr.slice(0);
   var j, temp;
-  for (var i = arr.length - 1; i > 0; i--) {
+  for (var i = out.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
-    temp = arr[j];
-    arr[j] = arr[i];
-    arr[i] = temp;
+    temp = out[j];
+    out[j] = out[i];
+    out[i] = temp;
   }
-  return arr;
+  return out;
 }
 
 function getRandomShuffledSubarray(arr) {
-  shuffle(arr);
-  return arr.slice(0, randomInteger(0, arr.length)); //проверить randomInteger(0, arr.length) от 0 или от 1
+  var out = shuffle(arr);
+  var index = randomInteger(0, out.length);
+  return out.slice(0, index);
 }
 
 function generateApartmens(count) {
@@ -68,14 +75,14 @@ function generateApartmens(count) {
       },
       offer: {
         title: OFFER_TITLES[i],
-        address: location.x + ',' + location.y,
+        address: location.x + ',' + location.y, // создать ф-цию
         price: randomInteger(MIN_PRICE, MAX_PRICE),
-        type: randomInteger(0, APARTMENT_TYPE.length - 1),
+        type: randomString(APARTMENT_TYPE),
         rooms: randomInteger(MIN_NUMBER_ROOMS, MAX_NUMBER_ROOMS),
         guests: randomInteger(MIN_NUMBER_GUESTS, MAX_NUMBER_GUESTS),
-        checkin: randomInteger(0, REGISTRATION_TIME.length - 1),
-        checkout: randomInteger(0, REGISTRATION_TIME.length - 1),
-        features: shuffle(FEATURES),
+        checkin: randomString(REGISTRATION_TIME),
+        checkout: randomString(REGISTRATION_TIME),
+        features: getRandomShuffledSubarray(FEATURES),
         description: DESCRIPTION,
         photos: shuffle(PHOTOS),
       },
@@ -87,5 +94,6 @@ function generateApartmens(count) {
   }
   return apartmens;
 }
+
 generateApartmens(NUMBER_OF_APARTMENTS);
 
