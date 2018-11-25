@@ -25,12 +25,15 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var LOCATION_X_MIN = 0;
-var LOCATION_X_MAX = 630;
+var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
+var map = document.querySelector('.map');
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var mapPin = document.querySelector('.map__pins');
 
 function getAvatarUrlByIndex(index) {
-  var avatarUrl = 'img/avatars/user0${index}.png';
+  var avatarUrl = 'img/avatars/user0' + index + '.png';
   return avatarUrl;
 }
 
@@ -71,7 +74,8 @@ function generateApartmens(count) {
   var apartmens = [];
 
   for (var i = 1; i <= count; i++) {
-    var emptyString = ' ';
+    var locationX = randomInteger(LOCATION_X_MIN, LOCATION_X_MAX);
+    var locationY = randomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
 
     apartmens.push({
       author: {
@@ -79,7 +83,7 @@ function generateApartmens(count) {
       },
       offer: {
         title: OFFER_TITLES[i],
-        address: concatenateStrings(location.x, location.y),
+        address: concatenateStrings(locationX, locationY),
         price: randomInteger(MIN_PRICE, MAX_PRICE),
         type: randomString(APARTMENT_TYPE),
         rooms: randomInteger(MIN_NUMBER_ROOMS, MAX_NUMBER_ROOMS),
@@ -91,13 +95,35 @@ function generateApartmens(count) {
         photos: shuffle(PHOTOS),
       },
       location: {
-        x: randomInteger(LOCATION_X_MIN, LOCATION_X_MAX),
-        y: randomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX)
+        x: locationX,
+        y: locationY
       }
     });
   }
   return apartmens;
 }
 
-alert(generateApartmens(NUMBER_OF_APARTMENTS));
+map.classList.remove('map--faded');
 
+function createPin(pin) {
+  var pinElement = pinTemplate.cloneNode(true);
+  var pinElementWidth = getComputedStyle(pinTemplate, '::after').getPropertyValue('width');
+  var pinElementHeight = getComputedStyle(pinTemplate, '::after').getPropertyValue('height');
+
+  pinElement.style = 'left: ' + (pin.location.x - Math.round(pinElementWidth / 2)) + 'px; top: ' + (pin.location.y - pinElementHeight) + 'px;';
+  pinElement.querySelector('img').src = pin.author.avatar;
+  pinElement.querySelector('img').alt = pin.offer.description;
+  return pinElement;
+}
+
+function renderPins(pins) {
+  var fragment = document.createDocumentFragment();
+
+  for (var i = 0; i < pins.length; i++) {
+    fragment.appendChild(createPin(pins[i]));
+  }
+  return fragment;
+}
+
+var pins = generateApartmens(NUMBER_OF_APARTMENTS);
+mapPin.appendChild(renderPins(pins));
