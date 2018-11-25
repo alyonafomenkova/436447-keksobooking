@@ -45,6 +45,10 @@ function randomString(arr) {
   return arr[rand];
 }
 
+function concatenateStrings(a, b) {
+  return a + ',' + b;
+}
+
 function shuffle(arr) {
   var out = arr.slice(0);
   var j, temp;
@@ -75,7 +79,7 @@ function generateApartmens(count) {
       },
       offer: {
         title: OFFER_TITLES[i],
-        address: location.x + ',' + location.y, // создать ф-цию
+        address: concatenateStrings(location.x, location.y),
         price: randomInteger(MIN_PRICE, MAX_PRICE),
         type: randomString(APARTMENT_TYPE),
         rooms: randomInteger(MIN_NUMBER_ROOMS, MAX_NUMBER_ROOMS),
@@ -95,5 +99,5 @@ function generateApartmens(count) {
   return apartmens;
 }
 
-generateApartmens(NUMBER_OF_APARTMENTS);
+alert(generateApartmens(NUMBER_OF_APARTMENTS));
 
