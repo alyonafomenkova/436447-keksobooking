@@ -58,7 +58,8 @@ function concatenateStrings(a, b) {
 
 function shuffleArray(arr) {
   var out = arr.slice(0);
-  var j, temp;
+  var j;
+  var temp;
   for (var i = out.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
     temp = out[j];
