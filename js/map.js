@@ -25,6 +25,8 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var PHOTOS_WIDTH = 45;
+var PHOTOS_HEIGHT = 40;
 var LOCATION_X_MIN = 0;
 var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
@@ -37,8 +39,7 @@ var cardTemplate = document.querySelector('#card').content.querySelector('.map__
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 
 function getAvatarUrlByIndex(index) {
-  var avatarUrl = 'img/avatars/user0' + index + '.png';
-  return avatarUrl;
+  return 'img/avatars/user0' + index + '.png';
 }
 
 function randomInteger(min, max) {
@@ -138,7 +139,8 @@ function mapApartmentName(type) {
       return 'Дом';
     case 'palace':
       return 'Дворец';
-    default: return '';
+    default:
+      return '';
   }
 }
 
@@ -160,8 +162,8 @@ function createPhotos(photoUrls) {
     var img = document.createElement('img');
     img.src = photoUrls[i];
     img.classList.add('popup__photo');
-    img.width = 45;
-    img.height = 40;
+    img.width = PHOTOS_WIDTH;
+    img.height = PHOTOS_HEIGHT;
     img.alt = 'Фотография жилья';
     fragment.appendChild(img);
   }
