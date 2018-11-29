@@ -39,6 +39,7 @@ var cardTemplate = document.querySelector('#card').content.querySelector('.map__
 var mapFiltersContainer = document.querySelector('.map__filters-container');
 var adForm = document.querySelector('.ad-form');
 var mapFiltersForm = document.querySelector('.map__filters');
+var mapPinMain = document.querySelector('.map__pin--main');
 
 function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
@@ -200,10 +201,28 @@ function disableFormFields(formName) {
   }
 }
 
+function enableFormFields(formName) {
+  for (var i = 0; i < formName.children.length; i++) {
+    formName.children[i].disabled = false;
+  }
+}
+
+function activateMapAndForms() {
+  //var apartments = generateApartments(NUMBER_OF_APARTMENTS);
+  map.classList.remove('map--faded');
+  enableFormFields(adForm);
+  enableFormFields(mapFiltersForm);
+  //mapPin.appendChild(renderPinsForApartments(apartments));
+  //map.insertBefore(createCardForApartment(apartments[0]), mapFiltersContainer);
+}
+
+function onMapPinMainMouseup() {
+  activateMapAndForms();
+}
+
+
 disableFormFields(adForm);
 disableFormFields(mapFiltersForm);
-
-//var apartments = generateApartments(NUMBER_OF_APARTMENTS);
-//map.classList.remove('map--faded');
-//mapPin.appendChild(renderPinsForApartments(apartments));
-//map.insertBefore(createCardForApartment(apartments[0]), mapFiltersContainer);
+mapPinMain.addEventListener('mouseup', function() {
+  onMapPinMainMouseup();
+});
