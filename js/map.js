@@ -37,6 +37,8 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pi
 var mapPin = document.querySelector('.map__pins');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
+var adForm = document.querySelector('.ad-form');
+var mapFiltersForm = document.querySelector('.map__filters');
 
 function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
@@ -192,7 +194,16 @@ function createCardForApartment(apartment) {
   return fragment;
 }
 
-var apartments = generateApartments(NUMBER_OF_APARTMENTS);
-map.classList.remove('map--faded');
-mapPin.appendChild(renderPinsForApartments(apartments));
-map.insertBefore(createCardForApartment(apartments[0]), mapFiltersContainer);
+function disableFormFields(formName) {
+  for (var i = 0; i < formName.children.length; i++) {
+    formName.children[i].disabled = true;
+  }
+}
+
+disableFormFields(adForm);
+disableFormFields(mapFiltersForm);
+
+//var apartments = generateApartments(NUMBER_OF_APARTMENTS);
+//map.classList.remove('map--faded');
+//mapPin.appendChild(renderPinsForApartments(apartments));
+//map.insertBefore(createCardForApartment(apartments[0]), mapFiltersContainer);
