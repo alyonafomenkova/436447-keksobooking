@@ -31,6 +31,8 @@ var LOCATION_X_MIN = 0;
 var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
+var STEM_OF_PIN_WIDTH = 10;
+var STEM_OF_PIN_HEIGHT = 22;
 
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -40,6 +42,10 @@ var mapFiltersContainer = document.querySelector('.map__filters-container');
 var adForm = document.querySelector('.ad-form');
 var mapFiltersForm = document.querySelector('.map__filters');
 var mapPinMain = document.querySelector('.map__pin--main');
+var addressInput = adForm.querySelector('#address');
+var isPageActive = false;
+var mapPinMainWidth = mapPinMain.clientWidth;
+var mapPinMainHeight = mapPinMain.clientHeight;
 
 function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
@@ -114,10 +120,7 @@ function generateApartments(count) {
 
 function createPin(pin) {
   var pinElement = pinTemplate.cloneNode(true);
-  var pinElementWidth = getComputedStyle(pinTemplate, '::after').getPropertyValue('width');
-  var pinElementHeight = getComputedStyle(pinTemplate, '::after').getPropertyValue('height');
-
-  pinElement.style = 'left: ' + (pin.location.x - Math.round(pinElementWidth / 2)) + 'px; top: ' + (pin.location.y - pinElementHeight) + 'px;';
+  pinElement.style = 'left: ' + (pin.location.x - Math.round(STEM_OF_PIN_WIDTH / 2)) + 'px; top: ' + (pin.location.y - STEM_OF_PIN_HEIGHT) + 'px;';
   pinElement.querySelector('img').src = pin.author.avatar;
   pinElement.querySelector('img').alt = pin.offer.description;
   return pinElement;
@@ -207,7 +210,14 @@ function enableFormFields(formName) {
   }
 }
 
+function setInputReadOnly(inputName) {
+  inputName.readOnly = true;
+}
+
 function activateMapAndForms() {
+  isPageActive = true;
+  setInputReadOnly(addressInput);
+  updateAddress();
   //var apartments = generateApartments(NUMBER_OF_APARTMENTS);
   map.classList.remove('map--faded');
   enableFormFields(adForm);
@@ -216,6 +226,25 @@ function activateMapAndForms() {
   //map.insertBefore(createCardForApartment(apartments[0]), mapFiltersContainer);
 }
 
+function getPinX() {
+  var rect = mapPinMain.getBoundingClientRect();
+  return Math.round(((rect.left + rect.right) / 2) + pageXOffset);
+}
+
+function getPinY() {
+  var rect = mapPinMain.getBoundingClientRect();
+  return isPageActive ?
+    Math.round((rect.bottom + STEM_OF_PIN_HEIGHT) + pageYOffset) :
+    Math.round(((rect.top + rect.bottom) / 2) + pageYOffset);
+}
+
+function updateAddress() {
+  var address = getPinX() + ", " + getPinY();
+  addressInput.value = address;
+}
+
+
+
 function onMapPinMainMouseup() {
   activateMapAndForms();
 }
@@ -223,6 +252,8 @@ function onMapPinMainMouseup() {
 
 disableFormFields(adForm);
 disableFormFields(mapFiltersForm);
+updateAddress();
+
 mapPinMain.addEventListener('mouseup', function() {
   onMapPinMainMouseup();
 });
