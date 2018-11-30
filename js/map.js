@@ -234,7 +234,7 @@ function getPinX() {
 function getPinY() {
   var rect = mapPinMain.getBoundingClientRect();
   return isPageActive ?
-    Math.round((rect.bottom + STEM_OF_PIN_HEIGHT) + pageYOffset) :
+    Math.round((((rect.top + rect.bottom) / 2) + STEM_OF_PIN_HEIGHT) + pageYOffset) :
     Math.round(((rect.top + rect.bottom) / 2) + pageYOffset);
 }
 
