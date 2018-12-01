@@ -277,6 +277,7 @@ function activateMapAndForms() {
 
 function onMapPinMainMouseup() {
   activateMapAndForms();
+  mapPinMain.removeEventListener('mouseup', onMapPinMainMouseup);
 }
 
 disableFormFields(adForm);
