@@ -135,7 +135,7 @@ function renderPinsForApartments(apartments) {
   for (var i = 0; i < apartments.length; i++) {
     var apartment = apartments[i];
     var pinElement = createPin(apartment);
-    pinElement.addEventListener('click', onPinClickListener.bind(this, apartment));
+    pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
     fragment.appendChild(pinElement);
   }
   return fragment;
