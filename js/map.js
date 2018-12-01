@@ -31,24 +31,32 @@ var LOCATION_X_MIN = 0;
 var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
+var STEM_OF_PIN_WIDTH = 10;
+var STEM_OF_PIN_HEIGHT = 22;
+var ESC_KEYCODE = 27;
 
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mapPin = document.querySelector('.map__pins');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var mapFiltersContainer = document.querySelector('.map__filters-container');
+var adForm = document.querySelector('.ad-form');
+var mapFiltersForm = document.querySelector('.map__filters');
+var mapPinMain = document.querySelector('.map__pin--main');
+var addressInput = adForm.querySelector('#address');
+var isPageActive = false;
 
 function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
 }
 
-function randomInteger(min, max) {
+function getRandomInteger(min, max) {
   var rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
   return rand;
 }
 
-function randomString(arr) {
+function getRandomString(arr) {
   var rand = Math.floor(Math.random() * arr.length);
   return arr[rand];
 }
@@ -72,7 +80,7 @@ function shuffleArray(arr) {
 
 function getRandomShuffledSubarray(arr) {
   var out = shuffleArray(arr);
-  var index = randomInteger(1, out.length);
+  var index = getRandomInteger(1, out.length);
   return out.slice(0, index);
 }
 
@@ -80,22 +88,22 @@ function generateApartments(count) {
   var apartmens = [];
 
   for (var i = 1; i <= count; i++) {
-    var locationX = randomInteger(LOCATION_X_MIN, LOCATION_X_MAX);
-    var locationY = randomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
+    var locationX = getRandomInteger(LOCATION_X_MIN, LOCATION_X_MAX);
+    var locationY = getRandomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
 
     apartmens.push({
       author: {
         avatar: getAvatarUrlByIndex(i)
       },
       offer: {
-        title: OFFER_TITLES[i],
+        title: getRandomString(OFFER_TITLES),
         address: concatenateStrings(locationX, locationY),
-        price: randomInteger(MIN_PRICE, MAX_PRICE),
-        type: randomString(APARTMENT_TYPE),
-        rooms: randomInteger(MIN_NUMBER_ROOMS, MAX_NUMBER_ROOMS),
-        guests: randomInteger(MIN_NUMBER_GUESTS, MAX_NUMBER_GUESTS),
-        checkin: randomString(REGISTRATION_TIME),
-        checkout: randomString(REGISTRATION_TIME),
+        price: getRandomInteger(MIN_PRICE, MAX_PRICE),
+        type: getRandomString(APARTMENT_TYPE),
+        rooms: getRandomInteger(MIN_NUMBER_ROOMS, MAX_NUMBER_ROOMS),
+        guests: getRandomInteger(MIN_NUMBER_GUESTS, MAX_NUMBER_GUESTS),
+        checkin: getRandomString(REGISTRATION_TIME),
+        checkout: getRandomString(REGISTRATION_TIME),
         features: getRandomShuffledSubarray(FEATURES),
         description: DESCRIPTION,
         photos: shuffleArray(PHOTOS),
@@ -109,22 +117,26 @@ function generateApartments(count) {
   return apartmens;
 }
 
-function createPin(pin) {
+function createPin(apartment) {
   var pinElement = pinTemplate.cloneNode(true);
-  var pinElementWidth = getComputedStyle(pinTemplate, '::after').getPropertyValue('width');
-  var pinElementHeight = getComputedStyle(pinTemplate, '::after').getPropertyValue('height');
-
-  pinElement.style = 'left: ' + (pin.location.x - Math.round(pinElementWidth / 2)) + 'px; top: ' + (pin.location.y - pinElementHeight) + 'px;';
-  pinElement.querySelector('img').src = pin.author.avatar;
-  pinElement.querySelector('img').alt = pin.offer.description;
+  pinElement.style = 'left: ' + (apartment.location.x - Math.round(STEM_OF_PIN_WIDTH / 2)) + 'px; top: ' + (apartment.location.y - STEM_OF_PIN_HEIGHT) + 'px;';
+  pinElement.querySelector('img').src = apartment.author.avatar;
+  pinElement.querySelector('img').alt = apartment.offer.description;
   return pinElement;
 }
 
-function renderPinsForApartments(pins) {
+function onPinClickListener(apartment) {
+  showCard(apartment);
+}
+
+function renderPinsForApartments(apartments) {
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < pins.length; i++) {
-    fragment.appendChild(createPin(pins[i]));
+  for (var i = 0; i < apartments.length; i++) {
+    var apartment = apartments[i];
+    var pinElement = createPin(apartment);
+    pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
+    fragment.appendChild(pinElement);
   }
   return fragment;
 }
@@ -186,13 +198,90 @@ function createCardForApartment(apartment) {
   cardElement.querySelector('.popup__description').textContent = apartment.offer.description;
   cardElement.replaceChild(createPhotos(photos), cardElement.querySelector('.popup__photos'));
   cardElement.querySelector('.popup__avatar').src = apartment.author.avatar;
+  cardElement.querySelector('.popup__close').addEventListener('click', onCardCloseClick);
+  document.addEventListener('keydown', onCardCloseEcsPress);
 
   fragment.appendChild(cardElement);
-
   return fragment;
 }
 
-var apartments = generateApartments(NUMBER_OF_APARTMENTS);
-map.classList.remove('map--faded');
-mapPin.appendChild(renderPinsForApartments(apartments));
-map.insertBefore(createCardForApartment(apartments[0]), mapFiltersContainer);
+function onCardCloseClick() {
+  destroyCard();
+  document.removeEventListener('keydown', onCardCloseEcsPress);
+}
+
+function onCardCloseEcsPress(evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    destroyCard();
+    document.removeEventListener('keydown', onCardCloseEcsPress);
+  }
+}
+
+function disableFormFields(formName) {
+  for (var i = 0; i < formName.children.length; i++) {
+    formName.children[i].disabled = true;
+  }
+}
+
+function enableFormFields(formName) {
+  for (var i = 0; i < formName.children.length; i++) {
+    formName.children[i].disabled = false;
+  }
+}
+
+function setInputReadOnly(inputName) {
+  inputName.readOnly = true;
+}
+
+function getPinX() {
+  var rect = mapPinMain.getBoundingClientRect();
+  return Math.round(((rect.left + rect.right) / 2) + pageXOffset);
+}
+
+function getPinY() {
+  var rect = mapPinMain.getBoundingClientRect();
+  return isPageActive ?
+    Math.round((((rect.top + rect.bottom) / 2) + STEM_OF_PIN_HEIGHT) + pageYOffset) :
+    Math.round(((rect.top + rect.bottom) / 2) + pageYOffset);
+}
+
+function updateAddress() {
+  var address = getPinX() + ', ' + getPinY();
+  addressInput.value = address;
+}
+
+function showCard(apartment) {
+  var card = map.querySelector('.map__card');
+  if (card) {
+    destroyCard();
+  }
+  map.insertBefore(createCardForApartment(apartment), mapFiltersContainer);
+}
+
+function destroyCard() {
+  var card = map.querySelector('.map__card');
+  map.removeChild(card);
+}
+
+function activateMapAndForms() {
+  var apartments = generateApartments(NUMBER_OF_APARTMENTS);
+
+  isPageActive = true;
+  setInputReadOnly(addressInput);
+  updateAddress();
+  map.classList.remove('map--faded');
+  enableFormFields(adForm);
+  enableFormFields(mapFiltersForm);
+  mapPin.appendChild(renderPinsForApartments(apartments));
+}
+
+function onMapPinMainMouseup() {
+  activateMapAndForms();
+  mapPinMain.removeEventListener('mouseup', onMapPinMainMouseup);
+}
+
+disableFormFields(adForm);
+disableFormFields(mapFiltersForm);
+updateAddress();
+
+mapPinMain.addEventListener('mouseup', onMapPinMainMouseup);
