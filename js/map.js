@@ -50,13 +50,13 @@ function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
 }
 
-function randomInteger(min, max) {
+function getRandomInteger(min, max) {
   var rand = min + Math.random() * (max + 1 - min);
   rand = Math.floor(rand);
   return rand;
 }
 
-function randomString(arr) {
+function getRandomString(arr) {
   var rand = Math.floor(Math.random() * arr.length);
   return arr[rand];
 }
@@ -80,7 +80,7 @@ function shuffleArray(arr) {
 
 function getRandomShuffledSubarray(arr) {
   var out = shuffleArray(arr);
-  var index = randomInteger(1, out.length);
+  var index = getRandomInteger(1, out.length);
   return out.slice(0, index);
 }
 
@@ -88,22 +88,22 @@ function generateApartments(count) {
   var apartmens = [];
 
   for (var i = 1; i <= count; i++) {
-    var locationX = randomInteger(LOCATION_X_MIN, LOCATION_X_MAX);
-    var locationY = randomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
+    var locationX = getRandomInteger(LOCATION_X_MIN, LOCATION_X_MAX);
+    var locationY = getRandomInteger(LOCATION_Y_MIN, LOCATION_Y_MAX);
 
     apartmens.push({
       author: {
         avatar: getAvatarUrlByIndex(i)
       },
       offer: {
-        title: randomString(OFFER_TITLES),
+        title: getRandomString(OFFER_TITLES),
         address: concatenateStrings(locationX, locationY),
-        price: randomInteger(MIN_PRICE, MAX_PRICE),
-        type: randomString(APARTMENT_TYPE),
-        rooms: randomInteger(MIN_NUMBER_ROOMS, MAX_NUMBER_ROOMS),
-        guests: randomInteger(MIN_NUMBER_GUESTS, MAX_NUMBER_GUESTS),
-        checkin: randomString(REGISTRATION_TIME),
-        checkout: randomString(REGISTRATION_TIME),
+        price: getRandomInteger(MIN_PRICE, MAX_PRICE),
+        type: getRandomString(APARTMENT_TYPE),
+        rooms: getRandomInteger(MIN_NUMBER_ROOMS, MAX_NUMBER_ROOMS),
+        guests: getRandomInteger(MIN_NUMBER_GUESTS, MAX_NUMBER_GUESTS),
+        checkin: getRandomString(REGISTRATION_TIME),
+        checkout: getRandomString(REGISTRATION_TIME),
         features: getRandomShuffledSubarray(FEATURES),
         description: DESCRIPTION,
         photos: shuffleArray(PHOTOS),
