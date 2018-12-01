@@ -45,9 +45,6 @@ var mapFiltersForm = document.querySelector('.map__filters');
 var mapPinMain = document.querySelector('.map__pin--main');
 var addressInput = adForm.querySelector('#address');
 var isPageActive = false;
-var mapPinMainWidth = mapPinMain.clientWidth;
-var mapPinMainHeight = mapPinMain.clientHeight;
-var closePopup = document.querySelectorAll('.popup__close');
 
 function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
@@ -249,13 +246,13 @@ function getPinY() {
 }
 
 function updateAddress() {
-  var address = getPinX() + ", " + getPinY();
+  var address = getPinX() + ', ' + getPinY();
   addressInput.value = address;
 }
 
 function showCard(apartment) {
   var card = map.querySelector('.map__card');
-  if(card) {
+  if (card) {
     destroyCard();
   }
   map.insertBefore(createCardForApartment(apartment), mapFiltersContainer);
@@ -286,6 +283,6 @@ disableFormFields(adForm);
 disableFormFields(mapFiltersForm);
 updateAddress();
 
-mapPinMain.addEventListener('mouseup', function() {
+mapPinMain.addEventListener ('mouseup', function() {
   onMapPinMainMouseup();
 });
