@@ -283,6 +283,4 @@ disableFormFields(adForm);
 disableFormFields(mapFiltersForm);
 updateAddress();
 
-mapPinMain.addEventListener ('mouseup', function() {
-  onMapPinMainMouseup();
-});
+mapPinMain.addEventListener('mouseup', onMapPinMainMouseup);
