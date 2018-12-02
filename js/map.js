@@ -47,6 +47,8 @@ var addressInput = adForm.querySelector('#address');
 var isPageActive = false;
 var priceInput = adForm.querySelector('#price');
 var typeInput = adForm.querySelector('#type');
+var checkinInput = adForm.querySelector('#timein');
+var checkoutInput = adForm.querySelector('#timeout');
 
 function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
@@ -309,7 +311,14 @@ function setMinPrice(apartmentType) {
   }
 }
 
+function onSynchronizeCheckinAndCheckoutTimes () {
+  checkoutInput.selectedIndex = checkinInput.selectedIndex = event.target.selectedIndex;
+}
+
 typeInput.addEventListener('change', function(evt) {
   var apartmentType = typeInput.value;
   setMinPrice(apartmentType);
 });
+
+checkinInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
+checkoutInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
