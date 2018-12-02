@@ -45,6 +45,8 @@ var mapFiltersForm = document.querySelector('.map__filters');
 var mapPinMain = document.querySelector('.map__pin--main');
 var addressInput = adForm.querySelector('#address');
 var isPageActive = false;
+var priceInput = adForm.querySelector('#price');
+var typeInput = adForm.querySelector('#type');
 
 function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
@@ -285,3 +287,29 @@ disableFormFields(mapFiltersForm);
 updateAddress();
 
 mapPinMain.addEventListener('mouseup', onMapPinMainMouseup);
+
+function setMinPrice(apartmentType) {
+  switch (apartmentType) {
+    case 'bungalo':
+      priceInput.setAttribute('min', 0);
+      priceInput.setAttribute('placeholder', 0);
+      break;
+    case 'flat':
+      priceInput.setAttribute('min', 1000);
+      priceInput.setAttribute('placeholder', 1000);
+      break;
+    case 'house':
+      priceInput.setAttribute('min', 5000);
+      priceInput.setAttribute('placeholder', 5000);
+      break;
+    case 'palace':
+      priceInput.setAttribute('min', 10000);
+      priceInput.setAttribute('placeholder', 10000);
+      break;
+  }
+}
+
+typeInput.addEventListener('change', function(evt) {
+  var apartmentType = typeInput.value;
+  setMinPrice(apartmentType);
+});
