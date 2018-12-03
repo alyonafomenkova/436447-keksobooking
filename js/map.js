@@ -357,11 +357,11 @@ typeInput.addEventListener('change', function () {
 checkinInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
 checkoutInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
 
-roomInput.addEventListener ('change', function() {
+roomInput.addEventListener('change', function() {
   var quantityRooms = roomInput.value;
   setCapacity(quantityRooms);
 });
 
-capacityInput.addEventListener ('change', function() {
+capacityInput.addEventListener('change', function() {
   capacityInput.setCustomValidity('');
 });
