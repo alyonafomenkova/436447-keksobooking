@@ -34,6 +34,14 @@ var LOCATION_Y_MAX = 630;
 var STEM_OF_PIN_WIDTH = 10;
 var STEM_OF_PIN_HEIGHT = 22;
 var ESC_KEYCODE = 27;
+var MIN_PRICE_FOR_BUNGALO = 0;
+var MIN_PRICE_FOR_FLAT = 1000;
+var MIN_PRICE_FOR_HOUSE = 5000;
+var MIN_PRICE_FOR_PALACE = 10000;
+var ROOM_1 = '1';
+var ROOMS_2 = '2';
+var ROOMS_3 = '3';
+var ROOMS_100 = '100';
 
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -51,6 +59,14 @@ var checkinInput = adForm.querySelector('#timein');
 var checkoutInput = adForm.querySelector('#timeout');
 var capacityInput = adForm.querySelector('#capacity');
 var roomInput = adForm.querySelector('#room_number');
+var threeGuestsOption = capacityInput.options[0];
+var twoGuestsOption = capacityInput.options[1];
+var oneGuestOption = capacityInput.options[2];
+var noGuestsOption = capacityInput.options[3];
+var errorMessageOneRoom = 'Можем принять только одного гостя';
+var errorMessageTwoRooms = 'Можем принять одного или двух гостей';
+var errorMessageThreeRooms = 'Можем принять одного, два или три гостя';
+var errorMessageHundredRooms = 'Не можем принять гостей';
 
 function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
@@ -295,20 +311,20 @@ mapPinMain.addEventListener('mouseup', onMapPinMainMouseup);
 function setMinPrice(apartmentType) {
   switch (apartmentType) {
     case 'bungalo':
-      priceInput.setAttribute('min', 0);
-      priceInput.setAttribute('placeholder', 0);
+      priceInput.setAttribute('min', MIN_PRICE_FOR_BUNGALO);
+      priceInput.setAttribute('placeholder', MIN_PRICE_FOR_BUNGALO);
       break;
     case 'flat':
-      priceInput.setAttribute('min', 1000);
-      priceInput.setAttribute('placeholder', 1000);
+      priceInput.setAttribute('min', MIN_PRICE_FOR_FLAT);
+      priceInput.setAttribute('placeholder', MIN_PRICE_FOR_FLAT);
       break;
     case 'house':
-      priceInput.setAttribute('min', 5000);
-      priceInput.setAttribute('placeholder', 5000);
+      priceInput.setAttribute('min', MIN_PRICE_FOR_HOUSE);
+      priceInput.setAttribute('placeholder', MIN_PRICE_FOR_HOUSE);
       break;
     case 'palace':
-      priceInput.setAttribute('min', 10000);
-      priceInput.setAttribute('placeholder', 10000);
+      priceInput.setAttribute('min', MIN_PRICE_FOR_PALACE);
+      priceInput.setAttribute('placeholder', MIN_PRICE_FOR_PALACE);
       break;
   }
 }
@@ -317,36 +333,26 @@ function onSynchronizeCheckinAndCheckoutTimes() {
   checkoutInput.selectedIndex = checkinInput.selectedIndex = event.target.selectedIndex;
 }
 
-function setCapacity(quantityRooms) {
-  switch (quantityRooms) {
-    case '1':
-      capacityInput.options[0].disabled = true;
-      capacityInput.options[1].disabled = true;
-      capacityInput.options[3].disabled = true;
-      capacityInput.options[2].disabled = false;
-      capacityInput.setCustomValidity('Можем принять только одного гостя');
+function setCapacity(roomsCount) {
+  switch (roomsCount) {
+    case ROOM_1:
+      capacityInput.setCustomValidity(errorMessageOneRoom);
       break;
-    case '2':
-      capacityInput.options[0].disabled = true;
-      capacityInput.options[3].disabled = true;
-      capacityInput.options[2].disabled = false;
-      capacityInput.options[1].disabled = false;
-      capacityInput.setCustomValidity('Можем принять одного или двух гостей');
+    case ROOMS_2:
+      capacityInput.setCustomValidity(errorMessageTwoRooms);
       break;
-    case '3':
-      capacityInput.options[3].disabled = true;
-      capacityInput.options[0].disabled = false;
-      capacityInput.options[1].disabled = false;
-      capacityInput.setCustomValidity('Можем принять одного, два или три гостя');
+    case ROOMS_3:
+      capacityInput.setCustomValidity(errorMessageThreeRooms);
       break;
-    case '100':
-      capacityInput.options[2].disabled = true;
-      capacityInput.options[1].disabled = true;
-      capacityInput.options[0].disabled = true;
-      capacityInput.options[3].disabled = false;
-      capacityInput.setCustomValidity('Не можем принять гостей');
+    case ROOMS_100:
+      capacityInput.setCustomValidity(errorMessageHundredRooms);
       break;
   }
+
+  threeGuestsOption.disabled = roomsCount != ROOMS_3;
+  twoGuestsOption.disabled = roomsCount == ROOM_1 || roomsCount == ROOMS_100;
+  oneGuestOption.disabled = roomsCount == ROOMS_100;
+  noGuestsOption.disabled = roomsCount != ROOMS_100;
 }
 
 typeInput.addEventListener('change', function () {
