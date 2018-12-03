@@ -313,7 +313,7 @@ function setMinPrice(apartmentType) {
   }
 }
 
-function onSynchronizeCheckinAndCheckoutTimes () {
+function onSynchronizeCheckinAndCheckoutTimes() {
   checkoutInput.selectedIndex = checkinInput.selectedIndex = event.target.selectedIndex;
 }
 
@@ -349,7 +349,7 @@ function setCapacity(quantityRooms) {
   }
 }
 
-typeInput.addEventListener('change', function(evt) {
+typeInput.addEventListener('change', function () {
   var apartmentType = typeInput.value;
   setMinPrice(apartmentType);
 });
@@ -357,11 +357,11 @@ typeInput.addEventListener('change', function(evt) {
 checkinInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
 checkoutInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
 
-roomInput.addEventListener('change', function(evt) {
+roomInput.addEventListener ('change', function() {
   var quantityRooms = roomInput.value;
   setCapacity(quantityRooms);
 });
 
-capacityInput.addEventListener('change', function() {
+capacityInput.addEventListener ('change', function() {
   capacityInput.setCustomValidity('');
 });
