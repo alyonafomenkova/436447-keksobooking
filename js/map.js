@@ -49,6 +49,8 @@ var priceInput = adForm.querySelector('#price');
 var typeInput = adForm.querySelector('#type');
 var checkinInput = adForm.querySelector('#timein');
 var checkoutInput = adForm.querySelector('#timeout');
+var capacityInput = adForm.querySelector('#capacity');
+var roomInput = adForm.querySelector('#room_number');
 
 function getAvatarUrlByIndex(index) {
   return 'img/avatars/user0' + index + '.png';
@@ -315,6 +317,38 @@ function onSynchronizeCheckinAndCheckoutTimes () {
   checkoutInput.selectedIndex = checkinInput.selectedIndex = event.target.selectedIndex;
 }
 
+function setCapacity(quantityRooms) {
+  switch (quantityRooms) {
+    case '1':
+      capacityInput.options[0].disabled = true;
+      capacityInput.options[1].disabled = true;
+      capacityInput.options[3].disabled = true;
+      capacityInput.options[2].disabled = false;
+      capacityInput.setCustomValidity('Можем принять только одного гостя');
+      break;
+    case '2':
+      capacityInput.options[0].disabled = true;
+      capacityInput.options[3].disabled = true;
+      capacityInput.options[2].disabled = false;
+      capacityInput.options[1].disabled = false;
+      capacityInput.setCustomValidity('Можем принять одного или двух гостей');
+      break;
+    case '3':
+      capacityInput.options[3].disabled = true;
+      capacityInput.options[0].disabled = false;
+      capacityInput.options[1].disabled = false;
+      capacityInput.setCustomValidity('Можем принять одного, два или три гостя');
+      break;
+    case '100':
+      capacityInput.options[2].disabled = true;
+      capacityInput.options[1].disabled = true;
+      capacityInput.options[0].disabled = true;
+      capacityInput.options[3].disabled = false;
+      capacityInput.setCustomValidity('Не можем принять гостей');
+      break;
+  }
+}
+
 typeInput.addEventListener('change', function(evt) {
   var apartmentType = typeInput.value;
   setMinPrice(apartmentType);
@@ -322,3 +356,12 @@ typeInput.addEventListener('change', function(evt) {
 
 checkinInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
 checkoutInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
+
+roomInput.addEventListener('change', function(evt) {
+  var quantityRooms = roomInput.value;
+  setCapacity(quantityRooms);
+});
+
+capacityInput.addEventListener('change', function() {
+  capacityInput.setCustomValidity('');
+});
