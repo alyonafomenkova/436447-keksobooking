@@ -292,6 +292,7 @@ function activateMapAndForms() {
   setInputReadOnly(addressInput);
   updateAddress();
   map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
   enableFormFields(adForm);
   enableFormFields(mapFiltersForm);
   mapPin.appendChild(renderPinsForApartments(apartments));
