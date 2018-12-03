@@ -350,10 +350,10 @@ function setCapacity(roomsCount) {
       break;
   }
 
-  threeGuestsOption.disabled = roomsCount != ROOMS_3;
-  twoGuestsOption.disabled = roomsCount == ROOM_1 || roomsCount == ROOMS_100;
-  oneGuestOption.disabled = roomsCount == ROOMS_100;
-  noGuestsOption.disabled = roomsCount != ROOMS_100;
+  threeGuestsOption.disabled = roomsCount !== ROOMS_3;
+  twoGuestsOption.disabled = roomsCount === ROOM_1 || roomsCount === ROOMS_100;
+  oneGuestOption.disabled = roomsCount === ROOMS_100;
+  noGuestsOption.disabled = roomsCount !== ROOMS_100;
 }
 
 typeInput.addEventListener('change', function () {
