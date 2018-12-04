@@ -290,24 +290,12 @@ function activateMapAndForms() {
 
   isPageActive = true;
   setInputReadOnly(addressInput);
-  updateAddress();
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   enableFormFields(adForm);
   enableFormFields(mapFiltersForm);
   mapPin.appendChild(renderPinsForApartments(apartments));
 }
-
-function onMapPinMainMouseup() {
-  activateMapAndForms();
-  mapPinMain.removeEventListener('mouseup', onMapPinMainMouseup);
-}
-
-disableFormFields(adForm);
-disableFormFields(mapFiltersForm);
-updateAddress();
-
-mapPinMain.addEventListener('mouseup', onMapPinMainMouseup);
 
 function setMinPrice(apartmentType) {
   switch (apartmentType) {
@@ -372,3 +360,69 @@ roomInput.addEventListener('change', function () {
 capacityInput.addEventListener('change', function () {
   capacityInput.setCustomValidity('');
 });
+
+disableFormFields(adForm);
+disableFormFields(mapFiltersForm);
+updateAddress();
+
+
+
+/* function getCoords(element) {
+  var box = element.getBoundingClientRect();
+
+  return {
+    top: Math.round(box.top + pageYOffset),
+    left: Math.round(box.left + pageXOffset)
+  };
+}
+
+var mapCoords = getCoords(map); */
+
+// DragAndDrops
+var startCoords = {
+  x: 0,
+  y: 0
+};
+
+function onMouseDown(downEvt) {
+  downEvt.preventDefault();
+  startCoords.x = downEvt.clientX;
+  startCoords.y = downEvt.clientY;
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+}
+
+function onMouseMove(moveEvt) {
+  moveEvt.preventDefault();
+
+  var shift = {
+    x: startCoords.x - moveEvt.clientX,
+    y: startCoords.y - moveEvt.clientY
+  };
+
+  startCoords = {
+    x: moveEvt.clientX,
+    y: moveEvt.clientY
+  };
+
+  mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+  mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+
+  //mapPinMain.style.top = (mapCoords.top - mapPinMain.offsetTop - shift.y) + 'px';
+  //mapPinMain.style.left = (mapCoords.left - mapPinMain.offsetLeft - shift.x) + 'px';
+}
+
+function onMouseUp(upEvt) {
+  upEvt.preventDefault();
+
+  if (!isPageActive) {
+    activateMapAndForms();
+  }
+
+  updateAddress();
+  document.removeEventListener('mousemove', onMouseMove);
+  document.removeEventListener('mouseup', onMouseUp);
+}
+
+mapPinMain.addEventListener('mousedown', onMouseDown);
