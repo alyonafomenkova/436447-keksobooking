@@ -400,16 +400,16 @@ function onMouseMove(moveEvt) {
     left = LOCATION_X_MIN - mapPinMain.offsetWidth / 2;
   }
 
-  if (left > (LOCATION_X_MAX  - mapPinMain.offsetWidth / 2)) {
-    left = LOCATION_X_MAX  - mapPinMain.offsetWidth / 2;
+  if (left > (LOCATION_X_MAX - mapPinMain.offsetWidth / 2)) {
+    left = LOCATION_X_MAX - mapPinMain.offsetWidth / 2;
   }
 
   if (top < LOCATION_Y_MIN - mapPinMain.offsetHeight) {
-    top = LOCATION_Y_MIN  - mapPinMain.offsetHeight;
+    top = LOCATION_Y_MIN - mapPinMain.offsetHeight;
   }
 
-  if (top > LOCATION_Y_MAX  - mapPinMain.offsetHeight) {
-    top = LOCATION_Y_MAX  - mapPinMain.offsetHeight;
+  if (top > LOCATION_Y_MAX - mapPinMain.offsetHeight) {
+    top = LOCATION_Y_MAX - mapPinMain.offsetHeight;
   }
   mapPinMain.style.top = top + 'px';
   mapPinMain.style.left = left + 'px';
