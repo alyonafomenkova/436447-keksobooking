@@ -267,8 +267,13 @@ function getPinY() {
     Math.round(((rect.top + rect.bottom) / 2) + pageYOffset);
 }
 
+function mapX() {
+  var rect = map.getBoundingClientRect();
+  return Math.round(rect.left + pageXOffset);
+}
+
 function updateAddress() {
-  var address = getPinX() + ', ' + getPinY();
+  var address = getPinX() - mapX() + ', ' + getPinY();
   addressInput.value = address;
 }
 
@@ -393,8 +398,8 @@ function onMouseMove(moveEvt) {
     y: moveEvt.clientY
   };
 
-  var top = (mapPinMain.offsetTop - shift.y);
-  var left = (mapPinMain.offsetLeft - shift.x);
+  var top = mapPinMain.offsetTop - shift.y;
+  var left = mapPinMain.offsetLeft - shift.x;
 
   if (left < (LOCATION_X_MIN - mapPinMain.offsetWidth / 2)) {
     left = LOCATION_X_MIN - mapPinMain.offsetWidth / 2;
