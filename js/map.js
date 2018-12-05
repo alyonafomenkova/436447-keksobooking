@@ -32,7 +32,7 @@ var LOCATION_X_MAX = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var STEM_OF_PIN_WIDTH = 10;
-var STEM_OF_PIN_HEIGHT = 22;
+var STEM_OF_PIN_HEIGHT = 32;
 var ESC_KEYCODE = 27;
 var MIN_PRICE_FOR_BUNGALO = 0;
 var MIN_PRICE_FOR_FLAT = 1000;
@@ -365,19 +365,6 @@ disableFormFields(adForm);
 disableFormFields(mapFiltersForm);
 updateAddress();
 
-
-
-/* function getCoords(element) {
-  var box = element.getBoundingClientRect();
-
-  return {
-    top: Math.round(box.top + pageYOffset),
-    left: Math.round(box.left + pageXOffset)
-  };
-}
-
-var mapCoords = getCoords(map); */
-
 // DragAndDrops
 var startCoords = {
   x: 0,
@@ -406,11 +393,26 @@ function onMouseMove(moveEvt) {
     y: moveEvt.clientY
   };
 
-  mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
-  mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+  var top = (mapPinMain.offsetTop - shift.y);
+  var left = (mapPinMain.offsetLeft - shift.x);
 
-  //mapPinMain.style.top = (mapCoords.top - mapPinMain.offsetTop - shift.y) + 'px';
-  //mapPinMain.style.left = (mapCoords.left - mapPinMain.offsetLeft - shift.x) + 'px';
+  if (left < (LOCATION_X_MIN - mapPinMain.offsetWidth / 2)) {
+    left = LOCATION_X_MIN - mapPinMain.offsetWidth / 2;
+  }
+
+  if (left > (LOCATION_X_MAX  - mapPinMain.offsetWidth / 2)) {
+    left = LOCATION_X_MAX  - mapPinMain.offsetWidth / 2;
+  }
+
+  if (top < LOCATION_Y_MIN - mapPinMain.offsetHeight) {
+    top = LOCATION_Y_MIN  - mapPinMain.offsetHeight;
+  }
+
+  if (top > LOCATION_Y_MAX  - mapPinMain.offsetHeight) {
+    top = LOCATION_Y_MAX  - mapPinMain.offsetHeight;
+  }
+  mapPinMain.style.top = top + 'px';
+  mapPinMain.style.left = left + 'px';
 }
 
 function onMouseUp(upEvt) {
