@@ -18,7 +18,7 @@
       }
       return fragment;
     }
-  }
+  };
 
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var startCoords = {

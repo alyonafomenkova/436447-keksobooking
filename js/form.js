@@ -21,7 +21,7 @@
     setInputReadOnly: function (inputName) {
       inputName.readOnly = true;
     },
-  }
+  };
 
   var MIN_PRICE_FOR_BUNGALO = 0;
   var MIN_PRICE_FOR_FLAT = 1000;

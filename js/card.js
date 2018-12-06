@@ -97,5 +97,5 @@
       }
       window.map.map.insertBefore(createCardForApartment(apartment), mapFiltersContainer);
     }
-  }
+  };
 })();

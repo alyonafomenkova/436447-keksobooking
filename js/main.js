@@ -78,5 +78,5 @@
       window.form.enableFormFields(window.form.mapFiltersForm);
       mapPin.appendChild(window.pin.renderPinsForApartments(apartments));
     }
-  }
+  };
 })();

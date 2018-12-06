@@ -35,5 +35,5 @@
       var index = window.util.getRandomInteger(1, out.length);
       return out.slice(0, index);
     }
-  }
+  };
 })();

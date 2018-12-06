@@ -24,6 +24,6 @@
       var rect = window.map.map.getBoundingClientRect();
       return Math.round(rect.left + pageXOffset);
     }
-  }
+  };
   window.form.updateAddress();
 })();
