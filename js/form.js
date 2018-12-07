@@ -1,29 +1,6 @@
 'use strict';
 
 (function () {
-  var adForm = document.querySelector('.ad-form');
-
-  window.form = {
-    adForm: adForm,
-    mapFiltersForm: document.querySelector('.map__filters'),
-    addressInput: adForm.querySelector('#address'),
-
-    updateAddress: function () {
-      var address = window.map.getPinX() - window.map.mapX() + ', ' + window.map.getPinY();
-      window.form.addressInput.value = address;
-    },
-
-    enableFormFields: function (formName) {
-      for (var i = 0; i < formName.children.length; i++) {
-        formName.children[i].disabled = false;
-      }
-    },
-
-    setInputReadOnly: function (inputName) {
-      inputName.readOnly = true;
-    },
-  };
-
   var MIN_PRICE_FOR_BUNGALO = 0;
   var MIN_PRICE_FOR_FLAT = 1000;
   var MIN_PRICE_FOR_HOUSE = 5000;
@@ -32,6 +9,8 @@
   var ROOMS_2 = '2';
   var ROOMS_3 = '3';
   var ROOMS_100 = '100';
+
+  var adForm = document.querySelector('.ad-form');
   var typeInput = adForm.querySelector('#type');
   var priceInput = adForm.querySelector('#price');
   var checkinInput = adForm.querySelector('#timein');
@@ -99,6 +78,27 @@
       formName.children[i].disabled = true;
     }
   }
+
+  window.form = {
+    adForm: adForm,
+    mapFiltersForm: document.querySelector('.map__filters'),
+    addressInput: adForm.querySelector('#address'),
+
+    updateAddress: function () {
+      var address = window.map.getPinX() - window.map.mapX() + ', ' + window.map.getPinY();
+      window.form.addressInput.value = address;
+    },
+
+    enableFormFields: function (formName) {
+      for (var i = 0; i < formName.children.length; i++) {
+        formName.children[i].disabled = false;
+      }
+    },
+
+    setInputReadOnly: function (inputName) {
+      inputName.readOnly = true;
+    },
+  };
 
   typeInput.addEventListener('change', function () {
     var apartmentType = typeInput.value;

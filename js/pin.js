@@ -2,24 +2,6 @@
 
 (function () {
 
-  window.pin = {
-    STEM_OF_PIN_WIDTH: 10,
-    STEM_OF_PIN_HEIGHT: 32,
-    mapPinMain: document.querySelector('.map__pin--main'),
-
-    renderPinsForApartments: function (apartments) {
-      var fragment = document.createDocumentFragment();
-
-      for (var i = 0; i < apartments.length; i++) {
-        var apartment = apartments[i];
-        var pinElement = createPin(apartment);
-        pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
-        fragment.appendChild(pinElement);
-      }
-      return fragment;
-    }
-  };
-
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var startCoords = {
     x: 0,
@@ -93,6 +75,24 @@
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
   }
+
+  window.pin = {
+    STEM_OF_PIN_WIDTH: 10,
+    STEM_OF_PIN_HEIGHT: 32,
+    mapPinMain: document.querySelector('.map__pin--main'),
+
+    renderPinsForApartments: function (apartments) {
+      var fragment = document.createDocumentFragment();
+
+      for (var i = 0; i < apartments.length; i++) {
+        var apartment = apartments[i];
+        var pinElement = createPin(apartment);
+        pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
+        fragment.appendChild(pinElement);
+      }
+      return fragment;
+    }
+  };
 
   window.pin.mapPinMain.addEventListener('mousedown', onMouseDown);
 })();

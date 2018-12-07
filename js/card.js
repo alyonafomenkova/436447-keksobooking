@@ -4,7 +4,6 @@
   var CURRENCY_RUB = '\u20bd';
   var PHOTOS_WIDTH = 45;
   var PHOTOS_HEIGHT = 40;
-  var ESC_KEYCODE = 27;
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var mapFiltersContainer = document.querySelector('.map__filters-container');
 
@@ -78,7 +77,7 @@
   }
 
   function onCardCloseEcsPress(evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.util.ESC) {
       destroyCard();
       document.removeEventListener('keydown', onCardCloseEcsPress);
     }

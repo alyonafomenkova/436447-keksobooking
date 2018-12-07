@@ -1,7 +1,13 @@
 'use strict';
 
 (function () {
+  var KEY_CODE = {
+    ESC: 27,
+  };
+
   window.util = {
+    ESC: KEY_CODE.ESC,
+
     getRandomInteger: function (min, max) {
       var rand = min + Math.random() * (max + 1 - min);
       rand = Math.floor(rand);
