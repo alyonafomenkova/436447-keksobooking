@@ -1,11 +1,12 @@
 'use strict';
 
 (function () {
+  var adForm = document.querySelector('.ad-form');
 
   window.form = {
-    adForm: document.querySelector('.ad-form'),
+    adForm: adForm,
     mapFiltersForm: document.querySelector('.map__filters'),
-    addressInput: document.querySelector('#address'),
+    addressInput: adForm.querySelector('#address'),
 
     updateAddress: function () {
       var address = window.map.getPinX() - window.map.mapX() + ', ' + window.map.getPinY();
@@ -31,12 +32,12 @@
   var ROOMS_2 = '2';
   var ROOMS_3 = '3';
   var ROOMS_100 = '100';
-  var typeInput = window.form.adForm.querySelector('#type');
-  var priceInput = window.form.adForm.querySelector('#price');
-  var checkinInput = window.form.adForm.querySelector('#timein');
-  var checkoutInput = window.form.adForm.querySelector('#timeout');
-  var roomInput = window.form.adForm.querySelector('#room_number');
-  var capacityInput = window.form.adForm.querySelector('#capacity');
+  var typeInput = adForm.querySelector('#type');
+  var priceInput = adForm.querySelector('#price');
+  var checkinInput = adForm.querySelector('#timein');
+  var checkoutInput = adForm.querySelector('#timeout');
+  var roomInput = adForm.querySelector('#room_number');
+  var capacityInput = adForm.querySelector('#capacity');
   var threeGuestsOption = capacityInput.options[0];
   var twoGuestsOption = capacityInput.options[1];
   var oneGuestOption = capacityInput.options[2];
