@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var NUMBER_OF_APARTMENTS = 8;
+  /* var NUMBER_OF_APARTMENTS = 8;
   var OFFER_TITLES = [
     'Большая уютная квартира',
     'Маленькая неуютная квартира',
@@ -24,14 +24,14 @@
   var PHOTOS = [
     'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-    'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+    'http://o0.github.io/assets/images/tokyo/hotel3.jpg']; */
   var mapPin = document.querySelector('.map__pins');
 
-  function getAvatarUrlByIndex(index) {
+/*   function getAvatarUrlByIndex(index) {
     return 'img/avatars/user0' + index + '.png';
-  }
+  } */
 
-  function generateApartments(count) {
+  /* function generateApartments(count) {
     var apartmens = [];
 
     for (var i = 1; i <= count; i++) {
@@ -62,13 +62,21 @@
       });
     }
     return apartmens;
+  } */
+
+  function onSuccessLoad (response) {
+    mapPin.appendChild(window.pin.renderPinsForApartments(response));
+  }
+
+  function onErrorLoad (response) {
+    console.log('error!!!!!!!!!!!');
   }
 
   window.main = {
     isPageActive: false,
 
     activateMapAndForms: function () {
-      var apartments = generateApartments(NUMBER_OF_APARTMENTS);
+      //var apartments = generateApartments(NUMBER_OF_APARTMENTS);
 
       window.main.isPageActive = true;
       window.form.setInputReadOnly(window.form.addressInput);
@@ -76,7 +84,8 @@
       window.form.adForm.classList.remove('ad-form--disabled');
       window.form.enableFormFields(window.form.adForm);
       window.form.enableFormFields(window.form.mapFiltersForm);
-      mapPin.appendChild(window.pin.renderPinsForApartments(apartments));
+      //mapPin.appendChild(window.pin.renderPinsForApartments(apartments));
+      window.backend.load(onSuccessLoad, onErrorLoad);
     }
   };
 })();
