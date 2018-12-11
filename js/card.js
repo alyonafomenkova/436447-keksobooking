@@ -60,7 +60,13 @@
     cardElement.querySelector('.popup__type').textContent = mapApartmentName(apartment.offer.type);
     cardElement.querySelector('.popup__text--capacity').textContent = apartment.offer.rooms + ' комнаты для ' + apartment.offer.guests + ' гостей';
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + apartment.offer.checkin + ', выезд до ' + apartment.offer.checkout;
-    cardElement.replaceChild(createFeatures(features), cardElement.querySelector('.popup__features'));
+
+    if (window.main.isDescriptionNotEmpty(features)) {
+      cardElement.replaceChild(createFeatures(features), cardElement.querySelector('.popup__features'));
+    } else {
+      cardElement.querySelector('.popup__features').remove();
+    }
+
     cardElement.querySelector('.popup__description').textContent = apartment.offer.description;
     cardElement.replaceChild(createPhotos(photos), cardElement.querySelector('.popup__photos'));
     cardElement.querySelector('.popup__avatar').src = apartment.author.avatar;

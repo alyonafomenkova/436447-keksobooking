@@ -2,6 +2,7 @@
 
 (function () {
 
+  var PROPERTY_OFFER = 'offer';
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var startCoords = {
     x: 0,
@@ -86,9 +87,13 @@
 
       for (var i = 0; i < apartments.length; i++) {
         var apartment = apartments[i];
-        var pinElement = createPin(apartment);
-        pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
-        fragment.appendChild(pinElement);
+        var hasProperty = window.main.hasProperty(PROPERTY_OFFER, apartment);
+
+        if (hasProperty) {
+          var pinElement = createPin(apartment);
+          pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
+          fragment.appendChild(pinElement);
+        }
       }
       return fragment;
     }

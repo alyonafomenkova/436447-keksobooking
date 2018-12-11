@@ -27,9 +27,9 @@
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg']; */
   var mapPin = document.querySelector('.map__pins');
 
-/*   function getAvatarUrlByIndex(index) {
-    return 'img/avatars/user0' + index + '.png';
-  } */
+  /*   function getAvatarUrlByIndex(index) {
+      return 'img/avatars/user0' + index + '.png';
+    } */
 
   /* function generateApartments(count) {
     var apartmens = [];
@@ -64,16 +64,29 @@
     return apartmens;
   } */
 
-  function onSuccessLoad (response) {
+  function onSuccessLoad(response) {
+    // delete response[1].offer; // For testing purposes only
+    //response[1].offer.features = []; // For testing purposes only
+    //delete response[1].author; // For testing purposes only
+    //response[1].offer.avatar = [];
+
     mapPin.appendChild(window.pin.renderPinsForApartments(response));
   }
 
-  function onErrorLoad (response) {
-    console.log('error!!!!!!!!!!!');
+  function onErrorLoad(response) {
+    console.log('error!!!!!!!!!!!'); ///
   }
 
   window.main = {
     isPageActive: false,
+
+    hasProperty: function (propertyName, objectName) {
+      return (propertyName in objectName);
+    },
+
+    isDescriptionNotEmpty: function (description) {
+      return description.length !== 0;
+    },
 
     activateMapAndForms: function () {
       //var apartments = generateApartments(NUMBER_OF_APARTMENTS);
