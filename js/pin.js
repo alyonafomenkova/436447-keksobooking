@@ -2,7 +2,12 @@
 
 (function () {
 
+  var PROPERTY_AUTHOR = 'author';
+  var PROPERTY_AVATAR = 'avatar';
+  var AVATAR_DEFAULT = 'img/avatars/placeholder.png';
   var PROPERTY_OFFER = 'offer';
+  var PROPERTY_LOCATION = 'location';
+
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var startCoords = {
     x: 0,
@@ -87,9 +92,19 @@
 
       for (var i = 0; i < apartments.length; i++) {
         var apartment = apartments[i];
-        var hasProperty = window.main.hasProperty(PROPERTY_OFFER, apartment);
+        // проверки, все ли данные от сервера получены
+        var hasPropertyAuthor = window.main.hasProperty(PROPERTY_AUTHOR, apartment);
+        var hasPropertyAvatar = window.main.hasProperty(PROPERTY_AVATAR, apartment.author);
+        var hasPropertyOffer = window.main.hasProperty(PROPERTY_OFFER, apartment);
+        var hasPropertyLocation = window.main.hasProperty(PROPERTY_LOCATION, apartment);
 
-        if (hasProperty) {
+        if (!hasPropertyAuthor || !hasPropertyAvatar) {
+          apartment.author = {
+            avatar: AVATAR_DEFAULT
+          }
+        }
+
+        if (hasPropertyOffer && hasPropertyLocation) {
           var pinElement = createPin(apartment);
           pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
           fragment.appendChild(pinElement);

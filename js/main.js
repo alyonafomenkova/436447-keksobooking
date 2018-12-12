@@ -26,10 +26,9 @@
     'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg']; */
   var mapPin = document.querySelector('.map__pins');
-
-  /*   function getAvatarUrlByIndex(index) {
-      return 'img/avatars/user0' + index + '.png';
-    } */
+/*   function getAvatarUrlByIndex() {
+    return 'img/avatars/default.png';
+  } */
 
   /* function generateApartments(count) {
     var apartmens = [];
@@ -67,8 +66,9 @@
   function onSuccessLoad(response) {
     // delete response[1].offer; // For testing purposes only
     //response[1].offer.features = []; // For testing purposes only
+    //delete response[1].location; // For testing purposes only
     //delete response[1].author; // For testing purposes only
-    //response[1].offer.avatar = [];
+    //delete response[1].author.avatar; // For testing purposes only
 
     mapPin.appendChild(window.pin.renderPinsForApartments(response));
   }
