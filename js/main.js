@@ -111,17 +111,11 @@
       window.form.disableFormFields(window.form.adForm);
       window.form.disableFormFields(window.form.mapFiltersForm);
       window.main.isPageActive = false;
-      console.log(window.pin.mapPinArray);
-      console.log('длина', window.pin.mapPinArray.length);
 
       for (var i = 0; i < window.pin.mapPinArray.length; i++) {
-        console.log('i-ый: ', window.pin.mapPinArray[i]);
-        //window.main.map.removeChild(window.pin.mapPinArray[i]);
         window.pin.mapPinArray[i].remove();
         var a = 0;
       }
-
-      console.log('deactivate function');
     }
   };
 })();

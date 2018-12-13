@@ -16,6 +16,7 @@
     y: 0
   };
   var mapPinArray = [];
+  var previousSelectedPin;
 
   function createPin(apartment) {
     var pinElement = pinTemplate.cloneNode(true);
@@ -25,8 +26,19 @@
     return pinElement;
   }
 
-  function onPinClickListener(apartment) {
+  function setPinActive(pinElement) {
+    pinElement.classList.add('map__pin--active');
+  }
+
+  function onPinClickListener(apartment, pinElement) {
     window.card.showCard(apartment);
+    setPinActive(pinElement);
+
+    if (previousSelectedPin !== pinElement) {
+      window.pin.disablePreviousPin();
+    }
+
+    previousSelectedPin = pinElement;
   }
 
   function onMouseDown(downEvt) {
@@ -112,12 +124,18 @@
 
         if (hasPropertyOffer && hasPropertyLocation && hasPropertyLocationX && hasPropertyLocationY) {
           var pinElement = createPin(apartment);
-          pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
+          pinElement.addEventListener('click', onPinClickListener.bind(null, apartment, pinElement));
           fragment.appendChild(pinElement);
           mapPinArray.push(pinElement);
         }
       }
       return fragment;
+    },
+
+    disablePreviousPin: function () {
+      if (previousSelectedPin) {
+        previousSelectedPin.classList.remove('map__pin--active');
+      }
     }
   };
 

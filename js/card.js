@@ -79,12 +79,14 @@
 
   function onCardCloseClick() {
     window.card.destroyCard();
+    window.pin.disablePreviousPin();
     document.removeEventListener('keydown', onCardCloseEcsPress);
   }
 
   function onCardCloseEcsPress(evt) {
     if (evt.keyCode === window.util.ESC) {
       window.card.destroyCard();
+      window.pin.disablePreviousPin();
       document.removeEventListener('keydown', onCardCloseEcsPress);
     }
   }
