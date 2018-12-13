@@ -78,29 +78,29 @@
   }
 
   function onCardCloseClick() {
-    destroyCard();
+    window.card.destroyCard();
     document.removeEventListener('keydown', onCardCloseEcsPress);
   }
 
   function onCardCloseEcsPress(evt) {
     if (evt.keyCode === window.util.ESC) {
-      destroyCard();
+      window.card.destroyCard();
       document.removeEventListener('keydown', onCardCloseEcsPress);
     }
   }
 
-  function destroyCard() {
-    var card = window.map.map.querySelector('.map__card');
-    window.map.map.removeChild(card);
-  }
-
   window.card = {
     showCard: function (apartment) {
-      var card = window.map.map.querySelector('.map__card');
+      var card = window.main.map.querySelector('.map__card');
       if (card) {
-        destroyCard();
+        window.card.destroyCard();
       }
-      window.map.map.insertBefore(createCardForApartment(apartment), mapFiltersContainer);
+      window.main.map.insertBefore(createCardForApartment(apartment), mapFiltersContainer);
+    },
+
+    destroyCard: function () {
+      var card = window.main.map.querySelector('.map__card');
+      window.main.map.removeChild(card);
     }
   };
 })();

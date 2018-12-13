@@ -15,6 +15,7 @@
     x: 0,
     y: 0
   };
+  var mapPinArray = [];
 
   function createPin(apartment) {
     var pinElement = pinTemplate.cloneNode(true);
@@ -88,6 +89,7 @@
     STEM_OF_PIN_WIDTH: 10,
     STEM_OF_PIN_HEIGHT: 32,
     mapPinMain: document.querySelector('.map__pin--main'),
+    mapPinArray: mapPinArray ,
 
     renderPinsForApartments: function (apartments) {
       var fragment = document.createDocumentFragment();
@@ -112,6 +114,7 @@
           var pinElement = createPin(apartment);
           pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
           fragment.appendChild(pinElement);
+          mapPinArray.push(pinElement);
         }
       }
       return fragment;

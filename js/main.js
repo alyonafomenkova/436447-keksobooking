@@ -25,7 +25,8 @@
     'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg']; */
-  var mapPin = document.querySelector('.map__pins');
+  var map = document.querySelector('.map');
+  var mapPin = map.querySelector('.map__pins');
   /*   function getAvatarUrlByIndex() {
       return 'img/avatars/default.png';
     } */
@@ -79,6 +80,7 @@
   }
 
   window.main = {
+    map: map,
     mapPin: mapPin,
     isPageActive: false,
 
@@ -95,12 +97,31 @@
 
       window.main.isPageActive = true;
       window.form.setInputReadOnly(window.form.addressInput);
-      window.map.map.classList.remove('map--faded');
+      map.classList.remove('map--faded');
       window.form.adForm.classList.remove('ad-form--disabled');
       window.form.enableFormFields(window.form.adForm);
       window.form.enableFormFields(window.form.mapFiltersForm);
       //mapPin.appendChild(window.pin.renderPinsForApartments(apartments));
       window.backend.load(onSuccessLoad, onErrorLoad);
+    },
+
+    deactivateMapAndForms: function () {
+      window.main.map.classList.add('map--faded');
+      window.form.adForm.classList.add('ad-form--disabled');
+      window.form.disableFormFields(window.form.adForm);
+      window.form.disableFormFields(window.form.mapFiltersForm);
+      window.main.isPageActive = false;
+      console.log(window.pin.mapPinArray);
+      console.log('длина', window.pin.mapPinArray.length);
+
+      for (var i = 0; i < window.pin.mapPinArray.length; i++) {
+        console.log('i-ый: ', window.pin.mapPinArray[i]);
+        //window.main.map.removeChild(window.pin.mapPinArray[i]);
+        window.pin.mapPinArray[i].remove();
+        var a = 0;
+      }
+
+      console.log('deactivate function');
     }
   };
 })();

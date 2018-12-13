@@ -6,7 +6,6 @@
     LOCATION_X_MAX: 1200,
     LOCATION_Y_MIN: 130,
     LOCATION_Y_MAX: 630,
-    map: document.querySelector('.map'),
 
     getPinX: function () {
       var rect = window.pin.mapPinMain.getBoundingClientRect();
@@ -21,7 +20,7 @@
     },
 
     mapX: function () {
-      var rect = window.map.map.getBoundingClientRect();
+      var rect = window.main.map.getBoundingClientRect();
       return Math.round(rect.left + pageXOffset);
     }
   };

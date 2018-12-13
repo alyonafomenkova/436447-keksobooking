@@ -73,21 +73,15 @@
     noGuestsOption.disabled = roomsCount !== ROOMS_100;
   }
 
-  function disableFormFields(formName) {
-    for (var i = 0; i < formName.children.length; i++) {
-      formName.children[i].disabled = true;
-    }
-  }
-
   function showErrorWindow() {
     var errorTemplate = document.querySelector('#error').content.querySelector('.error');
     var errorWindow = errorTemplate.cloneNode(true);
-    window.map.map.insertBefore(errorWindow, window.main.mapPin);
+    window.main.map.insertBefore(errorWindow, window.main.mapPin);
   }
 
   function closeErrorWindow() {
-    var errorWindow = window.map.map.querySelector('.error');
-    window.map.map.removeChild(errorWindow);
+    var errorWindow =  window.main.map.querySelector('.error');
+    window.main.map.removeChild(errorWindow);
     document.removeEventListener('click', onErrorWindowCloseButtonClick);
     document.removeEventListener('click', onErrorWindowClick);
     document.removeEventListener('keydown', onErrorWindowEcsPress);
@@ -95,13 +89,11 @@
 
   function onErrorWindowCloseButtonClick() {
     closeErrorWindow();
-    console.log('button click');
   }
 
   function onErrorWindowEcsPress(evt) {
     if (evt.keyCode === window.util.ESC) {
       closeErrorWindow();
-      console.log('esc pressed');
     }
   }
 
@@ -109,18 +101,43 @@
     closeErrorWindow();
   }
 
+  function showSuccessWindow() {
+    var successTemplate = document.querySelector('#success').content.querySelector('.success');
+    var successWindow = successTemplate.cloneNode(true);
+    window.main.map.insertBefore(successWindow, window.main.mapPin);
+  }
+
+  function closeSuccessWindow() {
+    var successWindow =  window.main.map.querySelector('.success');
+    window.main.map.removeChild(successWindow);
+    document.removeEventListener('click', onSuccessWindowClick);
+    document.removeEventListener('keydown', onSuccessWindowEcsPress);
+
+    window.main.deactivateMapAndForms();
+  }
+
+  function onSuccessWindowClick() {
+    closeSuccessWindow();
+  }
+
+  function onSuccessWindowEcsPress(evt) {
+    if (evt.keyCode === window.util.ESC) {
+      closeSuccessWindow();
+    }
+  }
+
   function onSuccessSave () {
-    console.log('SuccessSave');
+    showSuccessWindow();
+    document.addEventListener('click', onSuccessWindowClick);
+    document.addEventListener('keydown', onSuccessWindowEcsPress);
   }
 
   function onErrorSave () {
     showErrorWindow();
-    console.log('ErrorSave111');
     var errorCloseButton = document.querySelector('.error__button');
     errorCloseButton.addEventListener('click', onErrorWindowCloseButtonClick);
     document.addEventListener('click', onErrorWindowClick);
     document.addEventListener('keydown', onErrorWindowEcsPress);
-    console.log('ErrorSave');
   }
 
   window.form = {
@@ -142,6 +159,12 @@
     setInputReadOnly: function (inputName) {
       inputName.readOnly = true;
     },
+
+    disableFormFields: function (formName) {
+      for (var i = 0; i < formName.children.length; i++) {
+        formName.children[i].disabled = true;
+      }
+    }
   };
 
   typeInput.addEventListener('change', function () {
@@ -157,8 +180,8 @@
   capacityInput.addEventListener('change', function () {
     capacityInput.setCustomValidity('');
   });
-  disableFormFields(window.form.adForm);
-  disableFormFields(window.form.mapFiltersForm);
+  window.form.disableFormFields(window.form.adForm);
+  window.form.disableFormFields(window.form.mapFiltersForm);
   adForm.addEventListener('submit', function (evt) {
     var formData = new FormData(adForm);
     window.backend.save(formData, onSuccessSave, onErrorSave);
