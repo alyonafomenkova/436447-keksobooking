@@ -79,6 +79,50 @@
     }
   }
 
+  function showErrorWindow() {
+    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+    var errorWindow = errorTemplate.cloneNode(true);
+    window.map.map.insertBefore(errorWindow, window.main.mapPin);
+  }
+
+  function closeErrorWindow() {
+    var errorWindow = window.map.map.querySelector('.error');
+    window.map.map.removeChild(errorWindow);
+    document.removeEventListener('click', onErrorWindowCloseButtonClick);
+    document.removeEventListener('click', onErrorWindowClick);
+    document.removeEventListener('keydown', onErrorWindowEcsPress);
+  }
+
+  function onErrorWindowCloseButtonClick() {
+    closeErrorWindow();
+    console.log('button click');
+  }
+
+  function onErrorWindowEcsPress(evt) {
+    if (evt.keyCode === window.util.ESC) {
+      closeErrorWindow();
+      console.log('esc pressed');
+    }
+  }
+
+  function onErrorWindowClick() {
+    closeErrorWindow();
+  }
+
+  function onSuccessSave () {
+    console.log('SuccessSave');
+  }
+
+  function onErrorSave () {
+    showErrorWindow();
+    console.log('ErrorSave111');
+    var errorCloseButton = document.querySelector('.error__button');
+    errorCloseButton.addEventListener('click', onErrorWindowCloseButtonClick);
+    document.addEventListener('click', onErrorWindowClick);
+    document.addEventListener('keydown', onErrorWindowEcsPress);
+    console.log('ErrorSave');
+  }
+
   window.form = {
     adForm: adForm,
     mapFiltersForm: document.querySelector('.map__filters'),
@@ -115,4 +159,9 @@
   });
   disableFormFields(window.form.adForm);
   disableFormFields(window.form.mapFiltersForm);
+  adForm.addEventListener('submit', function (evt) {
+    var formData = new FormData(adForm);
+    window.backend.save(formData, onSuccessSave, onErrorSave);
+    evt.preventDefault();
+  });
 })();

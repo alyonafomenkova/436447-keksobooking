@@ -7,6 +7,8 @@
   var AVATAR_DEFAULT = 'img/avatars/placeholder.png';
   var PROPERTY_OFFER = 'offer';
   var PROPERTY_LOCATION = 'location';
+  var PROPERTY_LOCATION_X = 'x';
+  var PROPERTY_LOCATION_Y = 'y';
 
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var startCoords = {
@@ -97,6 +99,8 @@
         var hasPropertyAvatar = window.main.hasProperty(PROPERTY_AVATAR, apartment.author);
         var hasPropertyOffer = window.main.hasProperty(PROPERTY_OFFER, apartment);
         var hasPropertyLocation = window.main.hasProperty(PROPERTY_LOCATION, apartment);
+        var hasPropertyLocationX = window.main.hasProperty(PROPERTY_LOCATION_X, apartment.location);
+        var hasPropertyLocationY = window.main.hasProperty(PROPERTY_LOCATION_Y, apartment.location);
 
         if (!hasPropertyAuthor || !hasPropertyAvatar) {
           apartment.author = {
@@ -104,7 +108,7 @@
           }
         }
 
-        if (hasPropertyOffer && hasPropertyLocation) {
+        if (hasPropertyOffer && hasPropertyLocation && hasPropertyLocationX && hasPropertyLocationY) {
           var pinElement = createPin(apartment);
           pinElement.addEventListener('click', onPinClickListener.bind(null, apartment));
           fragment.appendChild(pinElement);
