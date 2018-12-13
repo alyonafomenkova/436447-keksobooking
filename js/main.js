@@ -110,6 +110,7 @@
       window.form.adForm.classList.add('ad-form--disabled');
       window.form.disableFormFields(window.form.adForm);
       window.form.disableFormFields(window.form.mapFiltersForm);
+      window.card.destroyCard();
       window.main.isPageActive = false;
 
       for (var i = 0; i < window.pin.mapPinArray.length; i++) {

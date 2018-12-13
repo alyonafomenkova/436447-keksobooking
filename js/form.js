@@ -11,12 +11,16 @@
   var ROOMS_100 = '100';
 
   var adForm = document.querySelector('.ad-form');
+  var titleInput = adForm.querySelector('#title');
+  var addressInput = adForm.querySelector('#address');
   var typeInput = adForm.querySelector('#type');
   var priceInput = adForm.querySelector('#price');
   var checkinInput = adForm.querySelector('#timein');
   var checkoutInput = adForm.querySelector('#timeout');
   var roomInput = adForm.querySelector('#room_number');
   var capacityInput = adForm.querySelector('#capacity');
+  var features = adForm.querySelectorAll('.features input[type="checkbox"]');
+  var descriptionInput = adForm.querySelector('#description');
   var threeGuestsOption = capacityInput.options[0];
   var twoGuestsOption = capacityInput.options[1];
   var oneGuestOption = capacityInput.options[2];
@@ -25,6 +29,15 @@
   var errorMessageTwoRooms = 'Можем принять одного или двух гостей';
   var errorMessageThreeRooms = 'Можем принять одного, два или три гостя';
   var errorMessageHundredRooms = 'Не можем принять гостей';
+  var defaultRoomInputIndex = roomInput.selectedIndex;
+  var defaultTypeInputIndex = typeInput.selectedIndex;
+  var defaultCheckinInputIndex = checkinInput.selectedIndex;
+  var defaultCheckoutInputIndex = checkoutInput.selectedIndex;
+  var defaultCapacityInputIndex = capacityInput.selectedIndex;
+  //var defaultFeaturesIndex = features.selectedIndex;
+
+
+
 
   function onSynchronizeCheckinAndCheckoutTimes() {
     checkoutInput.selectedIndex = checkinInput.selectedIndex = event.target.selectedIndex;
@@ -73,6 +86,30 @@
     noGuestsOption.disabled = roomsCount !== ROOMS_100;
   }
 
+  function resetFeatures() {
+    for (var i = 0; i < features.length; i++) {
+      features[i].checked = false;
+    }
+  }
+
+  function resetInput () {
+    titleInput.value = '';
+    addressInput.value = '';
+    descriptionInput.value = '';
+    priceInput.value = MIN_PRICE_FOR_HOUSE;
+    resetFeatures();
+  }
+
+
+  function setDefaultSelects() {
+    roomInput.selectedIndex = defaultRoomInputIndex;
+    typeInput.selectedIndex = defaultTypeInputIndex;
+    checkinInput.selectedIndex = defaultCheckinInputIndex;
+    checkoutInput.selectedIndex = defaultCheckoutInputIndex;
+    capacityInput.selectedIndex = defaultCapacityInputIndex;
+    //features.selectedIndex = defaultFeaturesIndex;
+  }
+
   function showErrorWindow() {
     var errorTemplate = document.querySelector('#error').content.querySelector('.error');
     var errorWindow = errorTemplate.cloneNode(true);
@@ -112,7 +149,6 @@
     window.main.map.removeChild(successWindow);
     document.removeEventListener('click', onSuccessWindowClick);
     document.removeEventListener('keydown', onSuccessWindowEcsPress);
-
     window.main.deactivateMapAndForms();
   }
 
@@ -127,6 +163,8 @@
   }
 
   function onSuccessSave () {
+    resetInput();
+    setDefaultSelects();
     showSuccessWindow();
     document.addEventListener('click', onSuccessWindowClick);
     document.addEventListener('keydown', onSuccessWindowEcsPress);
@@ -143,7 +181,7 @@
   window.form = {
     adForm: adForm,
     mapFiltersForm: document.querySelector('.map__filters'),
-    addressInput: adForm.querySelector('#address'),
+    addressInput: addressInput,
 
     updateAddress: function () {
       var address = window.map.getPinX() - window.map.mapX() + ', ' + window.map.getPinY();
@@ -171,15 +209,18 @@
     var apartmentType = typeInput.value;
     setMinPrice(apartmentType);
   });
+
   checkinInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
   checkoutInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
   roomInput.addEventListener('change', function () {
     var quantityRooms = roomInput.value;
     setCapacity(quantityRooms);
   });
+
   capacityInput.addEventListener('change', function () {
     capacityInput.setCustomValidity('');
   });
+
   window.form.disableFormFields(window.form.adForm);
   window.form.disableFormFields(window.form.mapFiltersForm);
   adForm.addEventListener('submit', function (evt) {
@@ -187,4 +228,5 @@
     window.backend.save(formData, onSuccessSave, onErrorSave);
     evt.preventDefault();
   });
+
 })();
