@@ -102,7 +102,7 @@
 
     destroyCard: function () {
       var card = window.main.map.querySelector('.map__card');
-      window.main.map.removeChild(card);
+      card.remove();
     }
   };
 })();

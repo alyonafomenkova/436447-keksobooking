@@ -21,6 +21,7 @@
   var capacityInput = adForm.querySelector('#capacity');
   var features = adForm.querySelectorAll('.features input[type="checkbox"]');
   var descriptionInput = adForm.querySelector('#description');
+  var clearButton = adForm.querySelector('.ad-form__reset');
   var threeGuestsOption = capacityInput.options[0];
   var twoGuestsOption = capacityInput.options[1];
   var oneGuestOption = capacityInput.options[2];
@@ -172,6 +173,12 @@
     document.addEventListener('keydown', onErrorWindowEcsPress);
   }
 
+  function onClearForm() {
+    resetInput();
+    setDefaultSelects();
+    window.main.deactivateMapAndForms();
+  }
+
   window.form = {
     adForm: adForm,
     mapFiltersForm: document.querySelector('.map__filters'),
@@ -217,4 +224,6 @@
     window.backend.save(formData, onSuccessSave, onErrorSave);
     evt.preventDefault();
   });
+  clearButton.addEventListener('click', onClearForm);
+  clearButton.addEventListener('keydown', onClearForm);
 })();
