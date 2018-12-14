@@ -22,14 +22,14 @@
   var features = adForm.querySelectorAll('.features input[type="checkbox"]');
   var descriptionInput = adForm.querySelector('#description');
   var clearButton = adForm.querySelector('.ad-form__reset');
-  var threeGuestsOption = capacityInput.options[0];
-  var twoGuestsOption = capacityInput.options[1];
-  var oneGuestOption = capacityInput.options[2];
-  var noGuestsOption = capacityInput.options[3];
   var errorMessageOneRoom = 'Можем принять только одного гостя';
   var errorMessageTwoRooms = 'Можем принять одного или двух гостей';
   var errorMessageThreeRooms = 'Можем принять одного, два или три гостя';
   var errorMessageHundredRooms = 'Не можем принять гостей';
+  var threeGuestsOption = capacityInput.options[0];
+  var twoGuestsOption = capacityInput.options[1];
+  var oneGuestOption = capacityInput.options[2];
+  var noGuestsOption = capacityInput.options[3];
   var defaultRoomInputIndex = roomInput.selectedIndex;
   var defaultTypeInputIndex = typeInput.selectedIndex;
   var defaultCheckinInputIndex = checkinInput.selectedIndex;
@@ -38,6 +38,28 @@
 
   function onSynchronizeCheckinAndCheckoutTimes() {
     checkoutInput.selectedIndex = checkinInput.selectedIndex = event.target.selectedIndex;
+  }
+
+  function validateCapacity() {
+    var rooms = roomInput.value;
+    var capacity = capacityInput.value;
+    var message;
+
+    if (rooms == ROOM_1) {
+      message = capacity == 1 ? '' : errorMessageOneRoom;
+    } else if (rooms == ROOMS_2) {
+      message = capacity == 1 || capacity == 2 ? '' : errorMessageTwoRooms;
+    } else if (rooms == ROOMS_3) {
+      message = capacity == 1 || capacity == 2 || capacity == 3 ? '' : errorMessageThreeRooms;
+    } else {
+      message = capacity == 0 ? '' : errorMessageHundredRooms;
+    }
+
+    capacityInput.setCustomValidity(message);
+    threeGuestsOption.disabled = rooms !== ROOMS_3;
+    twoGuestsOption.disabled = rooms === ROOM_1 || rooms === ROOMS_100;
+    oneGuestOption.disabled = rooms === ROOMS_100;
+    noGuestsOption.disabled = rooms !== ROOMS_100;
   }
 
   function setMinPrice(apartmentType) {
@@ -59,28 +81,6 @@
         priceInput.setAttribute('placeholder', MIN_PRICE_FOR_PALACE);
         break;
     }
-  }
-
-  function setCapacity(roomsCount) {
-    switch (roomsCount) {
-      case ROOM_1:
-        capacityInput.setCustomValidity(errorMessageOneRoom);
-        break;
-      case ROOMS_2:
-        capacityInput.setCustomValidity(errorMessageTwoRooms);
-        break;
-      case ROOMS_3:
-        capacityInput.setCustomValidity(errorMessageThreeRooms);
-        break;
-      case ROOMS_100:
-        capacityInput.setCustomValidity(errorMessageHundredRooms);
-        break;
-    }
-
-    threeGuestsOption.disabled = roomsCount !== ROOMS_3;
-    twoGuestsOption.disabled = roomsCount === ROOM_1 || roomsCount === ROOMS_100;
-    oneGuestOption.disabled = roomsCount === ROOMS_100;
-    noGuestsOption.disabled = roomsCount !== ROOMS_100;
   }
 
   function resetFeatures() {
@@ -209,21 +209,22 @@
   checkinInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
   checkoutInput.addEventListener('change', onSynchronizeCheckinAndCheckoutTimes);
   roomInput.addEventListener('change', function () {
-    var quantityRooms = roomInput.value;
-    setCapacity(quantityRooms);
+    validateCapacity();
   });
 
   capacityInput.addEventListener('change', function () {
-    capacityInput.setCustomValidity('');
+    validateCapacity();
   });
 
   window.form.disableFormFields(window.form.adForm);
   window.form.disableFormFields(window.form.mapFiltersForm);
+
   adForm.addEventListener('submit', function (evt) {
     var formData = new FormData(adForm);
     window.backend.save(formData, onSuccessSave, onErrorSave);
     evt.preventDefault();
   });
+
   clearButton.addEventListener('click', onClearForm);
   clearButton.addEventListener('keydown', onClearForm);
 })();
