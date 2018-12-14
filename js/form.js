@@ -34,10 +34,6 @@
   var defaultCheckinInputIndex = checkinInput.selectedIndex;
   var defaultCheckoutInputIndex = checkoutInput.selectedIndex;
   var defaultCapacityInputIndex = capacityInput.selectedIndex;
-  //var defaultFeaturesIndex = features.selectedIndex;
-
-
-
 
   function onSynchronizeCheckinAndCheckoutTimes() {
     checkoutInput.selectedIndex = checkinInput.selectedIndex = event.target.selectedIndex;
@@ -100,14 +96,12 @@
     resetFeatures();
   }
 
-
   function setDefaultSelects() {
     roomInput.selectedIndex = defaultRoomInputIndex;
     typeInput.selectedIndex = defaultTypeInputIndex;
     checkinInput.selectedIndex = defaultCheckinInputIndex;
     checkoutInput.selectedIndex = defaultCheckoutInputIndex;
     capacityInput.selectedIndex = defaultCapacityInputIndex;
-    //features.selectedIndex = defaultFeaturesIndex;
   }
 
   function showErrorWindow() {
@@ -183,11 +177,6 @@
     mapFiltersForm: document.querySelector('.map__filters'),
     addressInput: addressInput,
 
-    updateAddress: function () {
-      var address = window.map.getPinX() - window.map.mapX() + ', ' + window.map.getPinY();
-      window.form.addressInput.value = address;
-    },
-
     enableFormFields: function (formName) {
       for (var i = 0; i < formName.children.length; i++) {
         formName.children[i].disabled = false;
@@ -228,5 +217,4 @@
     window.backend.save(formData, onSuccessSave, onErrorSave);
     evt.preventDefault();
   });
-
 })();

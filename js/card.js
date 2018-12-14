@@ -105,5 +105,4 @@
       window.main.map.removeChild(card);
     }
   };
-
 })();

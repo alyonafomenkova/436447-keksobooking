@@ -27,6 +27,17 @@
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg']; */
   var map = document.querySelector('.map');
   var mapPin = map.querySelector('.map__pins');
+  var mainPin = map.querySelector('.map__pin--main');
+  var startCoordsOfMainPin = {
+    left: window.getComputedStyle(mainPin, null).getPropertyValue("left"),
+    top: window.getComputedStyle(mainPin, null).getPropertyValue("top")
+  };
+
+  function setStartPositionOfMainPin() {
+    mainPin.style.left = startCoordsOfMainPin.left;
+    mainPin.style.top = startCoordsOfMainPin.top;
+  }
+
   /*   function getAvatarUrlByIndex() {
       return 'img/avatars/default.png';
     } */
@@ -82,6 +93,7 @@
   window.main = {
     map: map,
     mapPin: mapPin,
+    mainPin: mainPin,
     isPageActive: false,
 
     hasProperty: function (propertyName, objectName) {
@@ -90,6 +102,11 @@
 
     isDescriptionNotEmpty: function (description) {
       return description.length !== 0;
+    },
+
+    updateAddress: function () {
+      var address = window.map.getPinX() - window.map.mapX() + ', ' + window.map.getPinY();
+      window.form.addressInput.value = address;
     },
 
     activateMapAndForms: function () {
@@ -117,6 +134,9 @@
         window.pin.mapPinArray[i].remove();
         var a = 0;
       }
+
+      setStartPositionOfMainPin();
+      window.main.updateAddress();
     }
   };
 })();

@@ -8,12 +8,12 @@
     LOCATION_Y_MAX: 630,
 
     getPinX: function () {
-      var rect = window.pin.mapPinMain.getBoundingClientRect();
+      var rect = window.main.mainPin.getBoundingClientRect();
       return Math.round(((rect.left + rect.right) / 2) + pageXOffset);
     },
 
     getPinY: function () {
-      var rect = window.pin.mapPinMain.getBoundingClientRect();
+      var rect = window.main.mainPin.getBoundingClientRect();
       return window.main.isPageActive ?
         Math.round((((rect.top + rect.bottom) / 2) + window.pin.STEM_OF_PIN_HEIGHT) + pageYOffset) :
         Math.round(((rect.top + rect.bottom) / 2) + pageYOffset);
@@ -24,5 +24,5 @@
       return Math.round(rect.left + pageXOffset);
     }
   };
-  window.form.updateAddress();
+  window.main.updateAddress();
 })();
