@@ -36,8 +36,8 @@
   var defaultCheckoutInputIndex = checkoutInput.selectedIndex;
   var defaultCapacityInputIndex = capacityInput.selectedIndex;
 
-  function onSynchronizeCheckinAndCheckoutTimes() {
-    checkoutInput.selectedIndex = checkinInput.selectedIndex = event.target.selectedIndex;
+  function onSynchronizeCheckinAndCheckoutTimes(evt) {
+    checkoutInput.selectedIndex = checkinInput.selectedIndex = evt.target.selectedIndex;
   }
 
   function validateCapacity() {
