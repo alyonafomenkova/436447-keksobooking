@@ -9,6 +9,10 @@
   var ROOMS_2 = '2';
   var ROOMS_3 = '3';
   var ROOMS_100 = '100';
+  var CAPACITY_0 = '0';
+  var CAPACITY_1 = '1';
+  var CAPACITY_2 = '2';
+  var CAPACITY_3 = '3';
 
   var adForm = document.querySelector('.ad-form');
   var titleInput = adForm.querySelector('#title');
@@ -46,13 +50,16 @@
     var message;
 
     if (rooms === ROOM_1) {
-      message = capacity === 1 ? '' : errorMessageOneRoom;
+      message = capacity === CAPACITY_1 ? '' : errorMessageOneRoom;
+
     } else if (rooms === ROOMS_2) {
-      message = capacity === 1 || capacity === 2 ? '' : errorMessageTwoRooms;
+      message = capacity === CAPACITY_1 || capacity === CAPACITY_2 ? '' : errorMessageTwoRooms;
+
     } else if (rooms === ROOMS_3) {
-      message = capacity === 1 || capacity === 2 || capacity === 3 ? '' : errorMessageThreeRooms;
+      message = capacity === CAPACITY_1 || capacity === CAPACITY_2 || capacity === CAPACITY_3 ? '' : errorMessageThreeRooms;
+
     } else {
-      message = capacity === 0 ? '' : errorMessageHundredRooms;
+      message = capacity === CAPACITY_0 ? '' : errorMessageHundredRooms;
     }
 
     capacityInput.setCustomValidity(message);
