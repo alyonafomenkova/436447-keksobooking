@@ -5,8 +5,8 @@
   var mapPin = map.querySelector('.map__pins');
   var mainPin = map.querySelector('.map__pin--main');
   var startCoordsOfMainPin = {
-    left: window.getComputedStyle(mainPin, null).getPropertyValue("left"),
-    top: window.getComputedStyle(mainPin, null).getPropertyValue("top")
+    left: window.getComputedStyle(mainPin, null).getPropertyValue('left'),
+    top: window.getComputedStyle(mainPin, null).getPropertyValue('top')
   };
 
   function setStartPositionOfMainPin() {
@@ -22,7 +22,7 @@
   }
 
   function closeErrorWindow() {
-    var errorWindow =  window.main.map.querySelector('.error');
+    var errorWindow = window.main.map.querySelector('.error');
     window.main.map.removeChild(errorWindow);
     document.removeEventListener('click', onErrorWindowCloseButtonClick);
     document.removeEventListener('click', onErrorWindowClick);
@@ -45,11 +45,11 @@
 
   function onSuccessLoad(response) {
     // delete response[1].offer; // For testing purposes only
-    //response[1].offer.features = []; // For testing purposes only
-    //delete response[1].location; // For testing purposes only
-    //delete response[1].author; // For testing purposes only
-    //delete response[1].author.avatar; // For testing purposes only
-    //delete response[1].location.y; // For testing purposes only
+    // response[1].offer.features = []; // For testing purposes only
+    // delete response[1].location; // For testing purposes only
+    // delete response[1].author; // For testing purposes only
+    // delete response[1].author.avatar; // For testing purposes only
+    // delete response[1].location.y; // For testing purposes only
 
     mapPin.appendChild(window.pin.renderPinsForApartments(response));
   }
@@ -93,7 +93,6 @@
 
       for (var i = 0; i < window.pin.mapPinArray.length; i++) {
         window.pin.mapPinArray[i].remove();
-        var a = 0;
       }
 
       setStartPositionOfMainPin();

@@ -102,7 +102,7 @@
 
     destroyCard: function () {
       var card = window.main.map.querySelector('.map__card');
-      if(card) {
+      if (card) {
         card.remove();
       }
     }

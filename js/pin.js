@@ -118,7 +118,7 @@
         if (!hasPropertyAuthor || !hasPropertyAvatar) {
           apartment.author = {
             avatar: AVATAR_DEFAULT
-          }
+          };
         }
 
         if (hasPropertyOffer && hasPropertyLocation && hasPropertyLocationX && hasPropertyLocationY) {

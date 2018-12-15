@@ -45,14 +45,14 @@
     var capacity = capacityInput.value;
     var message;
 
-    if (rooms == ROOM_1) {
-      message = capacity == 1 ? '' : errorMessageOneRoom;
-    } else if (rooms == ROOMS_2) {
-      message = capacity == 1 || capacity == 2 ? '' : errorMessageTwoRooms;
-    } else if (rooms == ROOMS_3) {
-      message = capacity == 1 || capacity == 2 || capacity == 3 ? '' : errorMessageThreeRooms;
+    if (rooms === ROOM_1) {
+      message = capacity === 1 ? '' : errorMessageOneRoom;
+    } else if (rooms === ROOMS_2) {
+      message = capacity === 1 || capacity === 2 ? '' : errorMessageTwoRooms;
+    } else if (rooms === ROOMS_3) {
+      message = capacity === 1 || capacity === 2 || capacity === 3 ? '' : errorMessageThreeRooms;
     } else {
-      message = capacity == 0 ? '' : errorMessageHundredRooms;
+      message = capacity === 0 ? '' : errorMessageHundredRooms;
     }
 
     capacityInput.setCustomValidity(message);
@@ -89,7 +89,7 @@
     }
   }
 
-  function resetInput () {
+  function resetInput() {
     titleInput.value = '';
     addressInput.value = '';
     descriptionInput.value = '';
@@ -112,7 +112,7 @@
   }
 
   function closeSuccessWindow() {
-    var successWindow =  window.main.map.querySelector('.success');
+    var successWindow = window.main.map.querySelector('.success');
     window.main.map.removeChild(successWindow);
     document.removeEventListener('click', onSuccessWindowClick);
     document.removeEventListener('keydown', onSuccessWindowEcsPress);
@@ -129,7 +129,7 @@
     }
   }
 
-  function onSuccessSave () {
+  function onSuccessSave() {
     resetInput();
     setDefaultSelects();
     showSuccessWindow();
