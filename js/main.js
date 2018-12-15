@@ -38,6 +38,35 @@
     mainPin.style.top = startCoordsOfMainPin.top;
   }
 
+  function showErrorWindow(errorMessage) {
+    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+    var errorWindow = errorTemplate.cloneNode(true);
+    errorWindow.querySelector('.error__message').textContent = errorMessage;
+    window.main.map.insertBefore(errorWindow, window.main.mapPin);
+  }
+
+  function closeErrorWindow() {
+    var errorWindow =  window.main.map.querySelector('.error');
+    window.main.map.removeChild(errorWindow);
+    document.removeEventListener('click', onErrorWindowCloseButtonClick);
+    document.removeEventListener('click', onErrorWindowClick);
+    document.removeEventListener('keydown', onErrorWindowEcsPress);
+  }
+
+  function onErrorWindowCloseButtonClick() {
+    closeErrorWindow();
+  }
+
+  function onErrorWindowEcsPress(evt) {
+    if (evt.keyCode === window.util.ESC) {
+      closeErrorWindow();
+    }
+  }
+
+  function onErrorWindowClick() {
+    closeErrorWindow();
+  }
+
   /*   function getAvatarUrlByIndex() {
       return 'img/avatars/default.png';
     } */
@@ -86,10 +115,6 @@
     mapPin.appendChild(window.pin.renderPinsForApartments(response));
   }
 
-  function onErrorLoad(response) {
-    console.log('error!!!!!!!!!!!'); ///
-  }
-
   window.main = {
     map: map,
     mapPin: mapPin,
@@ -119,7 +144,7 @@
       window.form.enableFormFields(window.form.adForm);
       window.form.enableFormFields(window.form.mapFiltersForm);
       //mapPin.appendChild(window.pin.renderPinsForApartments(apartments));
-      window.backend.load(onSuccessLoad, onErrorLoad);
+      window.backend.load(onSuccessLoad, window.main.onErrorLoading);
     },
 
     deactivateMapAndForms: function () {
@@ -137,6 +162,14 @@
 
       setStartPositionOfMainPin();
       window.main.updateAddress();
+    },
+
+    onErrorLoading: function (response) {
+      showErrorWindow(response);
+      var errorCloseButton = document.querySelector('.error__button');
+      errorCloseButton.addEventListener('click', onErrorWindowCloseButtonClick);
+      document.addEventListener('click', onErrorWindowClick);
+      document.addEventListener('keydown', onErrorWindowEcsPress);
     }
   };
 })();

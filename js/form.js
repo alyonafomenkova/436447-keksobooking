@@ -105,34 +105,6 @@
     capacityInput.selectedIndex = defaultCapacityInputIndex;
   }
 
-  function showErrorWindow() {
-    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-    var errorWindow = errorTemplate.cloneNode(true);
-    window.main.map.insertBefore(errorWindow, window.main.mapPin);
-  }
-
-  function closeErrorWindow() {
-    var errorWindow =  window.main.map.querySelector('.error');
-    window.main.map.removeChild(errorWindow);
-    document.removeEventListener('click', onErrorWindowCloseButtonClick);
-    document.removeEventListener('click', onErrorWindowClick);
-    document.removeEventListener('keydown', onErrorWindowEcsPress);
-  }
-
-  function onErrorWindowCloseButtonClick() {
-    closeErrorWindow();
-  }
-
-  function onErrorWindowEcsPress(evt) {
-    if (evt.keyCode === window.util.ESC) {
-      closeErrorWindow();
-    }
-  }
-
-  function onErrorWindowClick() {
-    closeErrorWindow();
-  }
-
   function showSuccessWindow() {
     var successTemplate = document.querySelector('#success').content.querySelector('.success');
     var successWindow = successTemplate.cloneNode(true);
@@ -163,14 +135,6 @@
     showSuccessWindow();
     document.addEventListener('click', onSuccessWindowClick);
     document.addEventListener('keydown', onSuccessWindowEcsPress);
-  }
-
-  function onErrorSave () {
-    showErrorWindow();
-    var errorCloseButton = document.querySelector('.error__button');
-    errorCloseButton.addEventListener('click', onErrorWindowCloseButtonClick);
-    document.addEventListener('click', onErrorWindowClick);
-    document.addEventListener('keydown', onErrorWindowEcsPress);
   }
 
   function onClearForm() {
@@ -221,7 +185,7 @@
 
   adForm.addEventListener('submit', function (evt) {
     var formData = new FormData(adForm);
-    window.backend.save(formData, onSuccessSave, onErrorSave);
+    window.backend.save(formData, onSuccessSave, window.main.onErrorLoading);
     evt.preventDefault();
   });
 
