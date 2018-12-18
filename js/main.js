@@ -52,6 +52,7 @@
     // delete response[1].location.y; // For testing purposes only
 
     mapPin.appendChild(window.pin.renderPinsForApartments(response));
+    window.form.enableFormFields(window.form.mapFiltersForm);
   }
 
   window.main = {
@@ -79,7 +80,6 @@
       map.classList.remove('map--faded');
       window.form.adForm.classList.remove('ad-form--disabled');
       window.form.enableFormFields(window.form.adForm);
-      window.form.enableFormFields(window.form.mapFiltersForm);
       window.backend.load(onSuccessLoad, window.main.onErrorLoading);
     },
 
