@@ -52,7 +52,7 @@
     // delete response[1].author.avatar; // For testing purposes only
     // delete response[1].location.y; // For testing purposes only
 
-    loadedData = response;
+    window.main.loadedData = response;
     mapPin.appendChild(window.pin.renderPinsForApartments(response));
     window.form.enableFormFields(window.form.mapFiltersForm);
   }
@@ -62,6 +62,7 @@
     mapPin: mapPin,
     mainPin: mainPin,
     isPageActive: false,
+    loadedData: loadedData,
 
     hasProperty: function (propertyName, objectName) {
       return propertyName in objectName;
@@ -74,6 +75,12 @@
     updateAddress: function () {
       var address = window.map.getPinX() - window.map.mapX() + ', ' + window.map.getPinY();
       window.form.addressInput.value = address;
+    },
+
+    clearPins: function  () {
+      for (var i = 0; i < window.pin.mapPinArray.length; i++) {
+        window.pin.mapPinArray[i].remove();
+      }
     },
 
     activateMapAndForms: function () {
@@ -92,11 +99,7 @@
       window.form.disableFormFields(window.form.mapFiltersForm);
       window.card.destroyCard();
       window.main.isPageActive = false;
-
-      for (var i = 0; i < window.pin.mapPinArray.length; i++) {
-        window.pin.mapPinArray[i].remove();
-      }
-
+      window.main.clearPins();
       setStartPositionOfMainPin();
       window.main.updateAddress();
     },
