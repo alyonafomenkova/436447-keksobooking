@@ -4,6 +4,7 @@
   var map = document.querySelector('.map');
   var mapPin = map.querySelector('.map__pins');
   var mainPin = map.querySelector('.map__pin--main');
+  var loadedData = [];
   var startCoordsOfMainPin = {
     left: window.getComputedStyle(mainPin, null).getPropertyValue('left'),
     top: window.getComputedStyle(mainPin, null).getPropertyValue('top')
@@ -51,6 +52,7 @@
     // delete response[1].author.avatar; // For testing purposes only
     // delete response[1].location.y; // For testing purposes only
 
+    loadedData = response;
     mapPin.appendChild(window.pin.renderPinsForApartments(response));
     window.form.enableFormFields(window.form.mapFiltersForm);
   }
