@@ -2,6 +2,15 @@
 
 (function () {
   var ANY_OPTION = 'any';
+  var PriceLevel = {
+    LOW: 10000,
+    HIGH: 50000
+  };
+  var PriceType = {
+    LOW: 'low',
+    MIDDLE: 'middle',
+    HIGH: 'high'
+  }
   var housingType = window.form.mapFiltersForm.querySelector('#housing-type');
   var housingPrice = window.form.mapFiltersForm.querySelector('#housing-price');
   var housingRooms = window.form.mapFiltersForm.querySelector('#housing-rooms');
@@ -9,63 +18,68 @@
   var housingFeatures = window.form.mapFiltersForm.querySelector('#housing-features');
 
   function applyFilter() {
-    //console.log('Здесь будет функция фильтрации....');
-    //console.log('housingType.value', housingType.value);
-
-    /* for (var i = 0; i < window.main.loadedData.length; i++) {
-      var title = window.main.loadedData[i].offer.title;
-      var type = window.main.loadedData[i].offer.type;
-      var rooms = window.main.loadedData[i].offer.rooms;
-      // if (housingType.value === ANY_OPTION) {
-      //   console.log('ALL. title is: ', title, 'type is: ', type);
-      // } else if (type === housingType.value) {
-      //   console.log('title is: ', title, 'type is: ', type);
-      // }
-
-      console.log('fffff    ', housingRooms.value);
-      if (housingRooms.value === ANY_OPTION) {
-        console.log('ALL. title is: ', title, 'rooms is: ', rooms);
-      } else if (rooms === housingRooms.value) {
-        console.log('title is: ', title, 'rooms is: ', rooms);
-      }
-    } */
-
     console.clear(); //
 
     var filteredArr = window.main.loadedData
       .filter(createApartmentTypeFilter(housingType.value))
+      .filter(createApartmentPriceFilter(housingPrice.value))
       .filter(createApartmentRoomsFilter(housingRooms.value))
       .filter(createApartmentGuestsFilter(housingGuests.value));
+      //.filter(createApartmentFeaturesFilter(housingFeatures.value));
 
-    filteredArr.forEach(function(apartment) {
-      console.log("[forEach] ", apartment.offer.title, apartment.offer.type, apartment.offer.rooms, apartment.offer.guests);
+    filteredArr.forEach(function (apartment) {
+      //
+      console.log("[forEach] ", apartment.offer.title, apartment.offer.price, apartment.offer.type, apartment.offer.rooms, apartment.offer.guests);
     });
   }
 
   function createApartmentTypeFilter(selectorValue) {
-    return function(apartment) {
+    return function (apartment) {
       return selectorValue === ANY_OPTION || selectorValue === apartment.offer.type;
     }
   }
 
-  ////// price
+  function createApartmentPriceFilter(selectorValue) {
+    return function (apartment) {
+      if (selectorValue === PriceType.LOW) {
+        return PriceLevel.LOW > apartment.offer.price;
+      } else if (selectorValue === PriceType.MIDDLE) {
+        return PriceLevel.LOW <= apartment.offer.price && PriceLevel.HIGH > apartment.offer.price;
+      } else if (selectorValue === PriceType.HIGH) {
+        return PriceLevel.HIGH <= apartment.offer.price;
+      }
+      return true;
+    }
+  }
 
   function createApartmentRoomsFilter(selectorValue) {
-    return function(apartment) {
+    return function (apartment) {
       return selectorValue === ANY_OPTION || selectorValue === apartment.offer.rooms.toString();
     }
   }
 
   function createApartmentGuestsFilter(selectorValue) {
-    return function(apartment) {
+    return function (apartment) {
       return selectorValue === ANY_OPTION || selectorValue === apartment.offer.guests.toString();
     }
   }
 
-  function onFilterSelectorsChange() {
+  function createApartmentFeaturesFilter(selectorValue) {
+    return function (apartment) {
+      var checkedFetures = housingFeatures.querySelectorAll('input[type=checkbox]:checked');
+      console.log('checkedFetures: ', checkedFetures);
+      //return selectorValue === ANY_OPTION || selectorValue === apartment.offer.guests.toString();
+    }
+  }
+
+  function updateFilteredPins() {
     //window.main.clearPins();
     applyFilter();
   }
+
+  var onFilterSelectorsChange = window.debounce(function () {
+    updateFilteredPins();
+  });
 
   function initializeFilterSelectors() {
     housingType.addEventListener('change', onFilterSelectorsChange);
