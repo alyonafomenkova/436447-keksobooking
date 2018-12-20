@@ -32,36 +32,35 @@
 
     console.clear(); //
 
-    var arr = window.main.loadedData;
-
-    var filteredArr = arr
-      .filter(letterCheFilter)
-      .filter(letterVeFilter);
+    var filteredArr = window.main.loadedData
+      .filter(createApartmentTypeFilter(housingType.value))
+      .filter(createApartmentRoomsFilter(housingRooms.value))
+      .filter(createApartmentGuestsFilter(housingGuests.value));
 
     filteredArr.forEach(function(apartment) {
-      console.log("[forEach] ", apartment.offer.title, apartment.offer.type);
+      console.log("[forEach] ", apartment.offer.title, apartment.offer.type, apartment.offer.rooms, apartment.offer.guests);
     });
-
-    // var filteredArr = arr
-    //   .filter(apartmentTypeFilter)
-    //   .filter(priceFilter)
-    //   .filter(guestsFilter)
-    //   .filter(featuresFilter);
   }
 
-  function letterCheFilter(apartment) {
-    console.log("[filter] ", apartment.offer.title);
-    return apartment.offer.title.includes("Ч") || apartment.offer.title.includes("ч");
-  };
+  function createApartmentTypeFilter(selectorValue) {
+    return function(apartment) {
+      return selectorValue === ANY_OPTION || selectorValue === apartment.offer.type;
+    }
+  }
 
-  function letterVeFilter(apartment) {
-    console.log("[filter 2] ", apartment.offer.title);
-    return apartment.offer.title.includes("в");
-  };
+  ////// price
 
-  // var apartmentTypeFilter = function(apartment) {
-  //   ...
-  // }
+  function createApartmentRoomsFilter(selectorValue) {
+    return function(apartment) {
+      return selectorValue === ANY_OPTION || selectorValue === apartment.offer.rooms.toString();
+    }
+  }
+
+  function createApartmentGuestsFilter(selectorValue) {
+    return function(apartment) {
+      return selectorValue === ANY_OPTION || selectorValue === apartment.offer.guests.toString();
+    }
+  }
 
   function onFilterSelectorsChange() {
     //window.main.clearPins();
