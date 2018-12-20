@@ -24,13 +24,22 @@
       .filter(createApartmentTypeFilter(housingType.value))
       .filter(createApartmentPriceFilter(housingPrice.value))
       .filter(createApartmentRoomsFilter(housingRooms.value))
-      .filter(createApartmentGuestsFilter(housingGuests.value));
-      //.filter(createApartmentFeaturesFilter(housingFeatures.value));
+      .filter(createApartmentGuestsFilter(housingGuests.value))
+      .filter(createApartmentFeaturesFilter(getSelectedFeatures()));
 
     filteredArr.forEach(function (apartment) {
       //
-      console.log("[forEach] ", apartment.offer.title, apartment.offer.price, apartment.offer.type, apartment.offer.rooms, apartment.offer.guests);
+      console.log("[forEach] ", apartment.offer.title, apartment.offer.features);
     });
+
+    //////////////
+
+    function getSelectedFeatures() {
+      var checkedFeatureInputs = housingFeatures.querySelectorAll('input[type=checkbox]:checked');
+      return Array.from(checkedFeatureInputs).map(function (input) {
+        return input.value;
+      });
+    }
   }
 
   function createApartmentTypeFilter(selectorValue) {
@@ -64,11 +73,14 @@
     }
   }
 
-  function createApartmentFeaturesFilter(selectorValue) {
+  function createApartmentFeaturesFilter(selectedFeatures) {
     return function (apartment) {
-      var checkedFetures = housingFeatures.querySelectorAll('input[type=checkbox]:checked');
-      console.log('checkedFetures: ', checkedFetures);
-      //return selectorValue === ANY_OPTION || selectorValue === apartment.offer.guests.toString();
+      var isFeatureExists = true;
+      selectedFeatures.every(function (selectedFeatures) {
+        isFeatureExists = apartment.offer.features.indexOf(selectedFeatures) !== -1;
+        return isFeatureExists;
+      });
+      return isFeatureExists;
     }
   }
 
