@@ -104,8 +104,10 @@
 
     renderPinsForApartments: function (apartments) {
       var fragment = document.createDocumentFragment();
+      var maxRenderedPins = 5;
+      var numberRenderedPins = apartments.length > maxRenderedPins ? maxRenderedPins : apartments.length;
 
-      for (var i = 0; i < apartments.length; i++) {
+      for (var i = 0; i < numberRenderedPins; i++) {
         var apartment = apartments[i];
         // проверки, все ли данные от сервера получены
         var hasPropertyAuthor = window.main.hasProperty(PROPERTY_AUTHOR, apartment);
