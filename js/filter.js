@@ -10,7 +10,7 @@
     LOW: 'low',
     MIDDLE: 'middle',
     HIGH: 'high'
-  }
+  };
   var housingType = window.form.mapFiltersForm.querySelector('#housing-type');
   var housingPrice = window.form.mapFiltersForm.querySelector('#housing-price');
   var housingRooms = window.form.mapFiltersForm.querySelector('#housing-rooms');
@@ -36,7 +36,7 @@
   function createApartmentTypeFilter(selectorValue) {
     return function (apartment) {
       return selectorValue === ANY_OPTION || selectorValue === apartment.offer.type;
-    }
+    };
   }
 
   function createApartmentPriceFilter(selectorValue) {
@@ -49,30 +49,32 @@
         return PriceLevel.HIGH <= apartment.offer.price;
       }
       return true;
-    }
+    };
   }
 
   function createApartmentRoomsFilter(selectorValue) {
     return function (apartment) {
       return selectorValue === ANY_OPTION || selectorValue === apartment.offer.rooms.toString();
-    }
+    };
   }
 
   function createApartmentGuestsFilter(selectorValue) {
     return function (apartment) {
       return selectorValue === ANY_OPTION || selectorValue === apartment.offer.guests.toString();
-    }
+    };
   }
 
-  function createApartmentFeaturesFilter(selectedFeatures) {
+  function createApartmentFeaturesFilter(checkedFeatures) {
     return function (apartment) {
       var isFeatureExists = true;
-      selectedFeatures.every(function (selectedFeatures) {
+
+      checkedFeatures.every(function (selectedFeatures) {
         isFeatureExists = apartment.offer.features.indexOf(selectedFeatures) !== -1;
         return isFeatureExists;
       });
+
       return isFeatureExists;
-    }
+    };
   }
 
   function updateFilteredPins(array) {

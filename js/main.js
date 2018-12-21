@@ -77,7 +77,7 @@
       window.form.addressInput.value = address;
     },
 
-    clearPins: function  () {
+    clearPins: function () {
       for (var i = 0; i < window.pin.mapPinArray.length; i++) {
         window.pin.mapPinArray[i].remove();
       }
