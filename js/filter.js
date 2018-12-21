@@ -17,29 +17,20 @@
   var housingGuests = window.form.mapFiltersForm.querySelector('#housing-guests');
   var housingFeatures = window.form.mapFiltersForm.querySelector('#housing-features');
 
-  function applyFilter() {
-    console.clear(); //
+  function getSelectedFeatures() {
+    var checkedFeatureInputs = housingFeatures.querySelectorAll('input[type=checkbox]:checked');
+    return Array.from(checkedFeatureInputs).map(function (input) {
+      return input.value;
+    });
+  }
 
-    var filteredArr = window.main.loadedData
+  function applyFilter(array) {
+    return array
       .filter(createApartmentTypeFilter(housingType.value))
       .filter(createApartmentPriceFilter(housingPrice.value))
       .filter(createApartmentRoomsFilter(housingRooms.value))
       .filter(createApartmentGuestsFilter(housingGuests.value))
       .filter(createApartmentFeaturesFilter(getSelectedFeatures()));
-
-    filteredArr.forEach(function (apartment) {
-      //
-      console.log("[forEach] ", apartment.offer.title, apartment.offer.features);
-    });
-
-    //////////////
-
-    function getSelectedFeatures() {
-      var checkedFeatureInputs = housingFeatures.querySelectorAll('input[type=checkbox]:checked');
-      return Array.from(checkedFeatureInputs).map(function (input) {
-        return input.value;
-      });
-    }
   }
 
   function createApartmentTypeFilter(selectorValue) {
@@ -84,13 +75,14 @@
     }
   }
 
-  function updateFilteredPins() {
-    //window.main.clearPins();
-    applyFilter();
+  function updateFilteredPins(array) {
+    window.main.clearPins();
+    var filteredArray = applyFilter(array);
+    window.pin.renderPinsForApartments(filteredArray);
   }
 
   var onFilterSelectorsChange = window.debounce(function () {
-    updateFilteredPins();
+    updateFilteredPins(window.main.loadedData);
   });
 
   function initializeFilterSelectors() {
