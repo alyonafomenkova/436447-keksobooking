@@ -127,6 +127,7 @@
           var pinElement = createPin(apartment);
           pinElement.addEventListener('click', onPinClickListener.bind(null, apartment, pinElement));
           fragment.appendChild(pinElement);
+          window.main.mapPin.appendChild(pinElement);
           mapPinArray.push(pinElement);
         }
       }

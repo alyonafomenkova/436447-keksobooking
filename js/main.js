@@ -53,7 +53,7 @@
     // delete response[1].location.y; // For testing purposes only
 
     window.main.loadedData = response;
-    mapPin.appendChild(window.pin.renderPinsForApartments(response));
+    window.pin.renderPinsForApartments(response);
     window.form.enableFormFields(window.form.mapFiltersForm);
   }
 

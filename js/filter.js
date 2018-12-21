@@ -79,6 +79,7 @@
 
   function updateFilteredPins(array) {
     window.main.clearPins();
+    window.card.destroyCard();
     var filteredArray = applyFilter(array);
     window.pin.renderPinsForApartments(filteredArray);
   }
