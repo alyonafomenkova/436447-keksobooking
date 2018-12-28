@@ -2,6 +2,10 @@
 
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var Image = {
+    WIDTH: '70px',
+    HEIGHT: '70px'
+  };
 
   // вынести константу ad-form в отдельный модуль, чтобы не искать по всему документу
 
@@ -50,8 +54,10 @@
           var imageContainer = isFirstUploading ? previewPhoto : previewPhoto.cloneNode();
           var img = document.createElement('img');
 
-          img.style = 'width: 70px; height: 70px';
+          img.style.width = Image.WIDTH;
+          img.style.height = Image.HEIGHT;
           img.src = reader.result;
+
           imageContainer.appendChild(img);
           photosContainer.appendChild(imageContainer);
           isFirstUploading = false;
