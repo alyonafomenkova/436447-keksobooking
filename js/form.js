@@ -102,6 +102,8 @@
     descriptionInput.value = '';
     priceInput.value = MIN_PRICE_FOR_HOUSE;
     resetFeatures();
+    window.upload.resetPhotos();
+    window.upload.setDefaultAvatar();
   }
 
   function setDefaultSelects() {
@@ -198,4 +200,6 @@
 
   clearButton.addEventListener('click', onClearForm);
   clearButton.addEventListener('keydown', onClearForm);
+  window.upload.uploadAvatar();
+  window.upload.uploadPhotos();
 })();
