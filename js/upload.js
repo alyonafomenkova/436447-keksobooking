@@ -17,7 +17,15 @@
   var previewPhoto = document.querySelector('.ad-form__photo');
   var isFirstUploading = true;
 
+  function resetInputOnClick(input) {
+    input.addEventListener('click', function () {
+      input.value = null;
+    });
+  }
+
   function uploadAvatar() {
+    resetInputOnClick(fileChooserAvatar);
+
     fileChooserAvatar.addEventListener('change', function () {
       var file = fileChooserAvatar.files[0];
       var fileName = file.name.toLowerCase();
@@ -39,6 +47,8 @@
   }
 
   function uploadPhotos() {
+    resetInputOnClick(fileChooserPhotos);
+
     fileChooserPhotos.addEventListener('change', function () {
       var file = fileChooserPhotos.files[0];
       var fileName = file.name.toLowerCase();
