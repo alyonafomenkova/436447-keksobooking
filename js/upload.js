@@ -23,26 +23,30 @@
     });
   }
 
+  function showPreview(file, element) {
+    var fileName = file.name.toLowerCase();
+
+    var matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        element.src = reader.result;
+      });
+
+      reader.readAsDataURL(file);
+    }
+  }
+
   function uploadAvatar() {
     resetInputOnClick(fileChooserAvatar);
 
     fileChooserAvatar.addEventListener('change', function () {
       var file = fileChooserAvatar.files[0];
-      var fileName = file.name.toLowerCase();
-
-      var matches = FILE_TYPES.some(function (it) {
-        return fileName.endsWith(it);
-      });
-
-      if (matches) {
-        var reader = new FileReader();
-
-        reader.addEventListener('load', function () {
-          previewAvatar.src = reader.result;
-        });
-
-        reader.readAsDataURL(file);
-      }
+      showPreview(file, previewAvatar);
     });
   }
 
@@ -50,29 +54,19 @@
     resetInputOnClick(fileChooserPhotos);
 
     fileChooserPhotos.addEventListener('change', function () {
-      var file = fileChooserPhotos.files[0];
-      var fileName = file.name.toLowerCase();
+      var files = fileChooserPhotos.files;
 
-      var matches = FILE_TYPES.some(function (it) {
-        return fileName.endsWith(it);
-      });
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var imageContainer = isFirstUploading ? previewPhoto : previewPhoto.cloneNode();
+        var img = document.createElement('img');
+        showPreview(file, img);
+        img.style.width = Image.WIDTH;
+        img.style.height = Image.HEIGHT;
 
-      if (matches) {
-        var reader = new FileReader();
-
-        reader.addEventListener('load', function () {
-          var imageContainer = isFirstUploading ? previewPhoto : previewPhoto.cloneNode();
-          var img = document.createElement('img');
-
-          img.style.width = Image.WIDTH;
-          img.style.height = Image.HEIGHT;
-          img.src = reader.result;
-
-          imageContainer.appendChild(img);
-          photosContainer.appendChild(imageContainer);
-          isFirstUploading = false;
-        });
-        reader.readAsDataURL(file);
+        imageContainer.appendChild(img);
+        photosContainer.appendChild(imageContainer);
+        isFirstUploading = false;
       }
     });
   }
