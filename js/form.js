@@ -148,6 +148,8 @@
 
   function onClearForm() {
     resetInput();
+    window.upload.resetFileInput(window.upload.fileChooserAvatar);
+    window.upload.resetFileInput(window.upload.fileChooserPhotos);
     setDefaultSelects();
     window.main.deactivateMapAndForms();
   }
