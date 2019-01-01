@@ -2,11 +2,11 @@
 
 (function () {
   var ANY_OPTION = 'any';
-  var PriceLevel = {
+  var PriceLevels = {
     LOW: 10000,
     HIGH: 50000
   };
-  var PriceType = {
+  var PriceTypes = {
     LOW: 'low',
     MIDDLE: 'middle',
     HIGH: 'high'
@@ -41,12 +41,12 @@
 
   function createApartmentPriceFilter(selectorValue) {
     return function (apartment) {
-      if (selectorValue === PriceType.LOW) {
-        return PriceLevel.LOW > apartment.offer.price;
-      } else if (selectorValue === PriceType.MIDDLE) {
-        return PriceLevel.LOW <= apartment.offer.price && PriceLevel.HIGH > apartment.offer.price;
-      } else if (selectorValue === PriceType.HIGH) {
-        return PriceLevel.HIGH <= apartment.offer.price;
+      if (selectorValue === PriceTypes.LOW) {
+        return PriceLevels.LOW > apartment.offer.price;
+      } else if (selectorValue === PriceTypes.MIDDLE) {
+        return PriceLevels.LOW <= apartment.offer.price && PriceLevels.HIGH > apartment.offer.price;
+      } else if (selectorValue === PriceTypes.HIGH) {
+        return PriceLevels.HIGH <= apartment.offer.price;
       }
       return true;
     };
@@ -66,14 +66,14 @@
 
   function createApartmentFeaturesFilter(checkedFeatures) {
     return function (apartment) {
-      var isFeatureExists = true;
+      var containFeatures = true;
 
       checkedFeatures.every(function (selectedFeatures) {
-        isFeatureExists = apartment.offer.features.indexOf(selectedFeatures) !== -1;
-        return isFeatureExists;
+        containFeatures = apartment.offer.features.indexOf(selectedFeatures) !== -1;
+        return containFeatures;
       });
 
-      return isFeatureExists;
+      return containFeatures;
     };
   }
 

@@ -25,19 +25,19 @@
             onLoad(xhr.response);
             break;
           case RequestStatus.BAD_REQUEST:
-            onError('Некорректный запрос. ' + 'Код ошибки: ' + xhr.status);
+            onError('Некорректный запрос. Код ошибки: ' + xhr.status);
             break;
           case RequestStatus.NOT_FOUND:
-            onError('Страница не найдена. ' + 'Код ошибки: ' + xhr.status);
+            onError('Страница не найдена. Код ошибки: ' + xhr.status);
             break;
           case RequestStatus.UNAUTHORIZED:
-            onError('Пользователь неавторизован. ' + 'Код ошибки: ' + xhr.status);
+            onError('Пользователь неавторизован. Код ошибки: ' + xhr.status);
             break;
           case RequestStatus.INTERNAL_SERVER_ERROR:
-            onError('Внутренняя ошибка сервера. ' + 'Код ошибки: ' + xhr.status);
+            onError('Внутренняя ошибка сервера. Код ошибки: ' + xhr.status);
             break;
           default:
-            onError('Произошла ошибка при загрузке персонажа. Повторите попытку позже. ' + 'код ошибки: ' + xhr.status);
+            onError('Произошла ошибка при загрузке персонажа. Повторите попытку позже. Код ошибки: ' + xhr.status);
         }
       });
 
