@@ -15,7 +15,7 @@
     ROOMS_100: '100'
   };
 
-  var ApartmentTypes = {
+  var ApartmentsType = {
     bungalo: 'bungalo',
     flat: 'flat',
     house: 'house',
@@ -83,19 +83,19 @@
 
   function setMinPrice(apartmentType) {
     switch (apartmentType) {
-      case ApartmentTypes.bungalo:
+      case ApartmentsType.bungalo:
         priceInput.setAttribute('min', MinPriceApartment.BUNGALO);
         priceInput.setAttribute('placeholder', MinPriceApartment.BUNGALO);
         break;
-      case ApartmentTypes.flat:
+      case ApartmentsType.flat:
         priceInput.setAttribute('min', MinPriceApartment.FLAT);
         priceInput.setAttribute('placeholder', MinPriceApartment.FLAT);
         break;
-      case ApartmentTypes.house:
+      case ApartmentsType.house:
         priceInput.setAttribute('min', MinPriceApartment.HOUSE);
         priceInput.setAttribute('placeholder', MinPriceApartment.HOUSE);
         break;
-      case ApartmentTypes.palace:
+      case ApartmentsType.palace:
         priceInput.setAttribute('min', MinPriceApartment.PALACE);
         priceInput.setAttribute('placeholder', MinPriceApartment.PALACE);
         break;
