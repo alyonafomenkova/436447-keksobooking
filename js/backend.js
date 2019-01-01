@@ -11,12 +11,6 @@
     NOT_FOUND: 404,
     INTERNAL_SERVER_ERROR: 500
   };
-  /* var REQUEST_TIMEOUT = 10000;
-  var REQUEST_STATUS_OK = 200;
-  var REQUEST_STATUS_BAD_REQUEST = 400;
-  var REQUEST_STATUS_UNAUTHORIZED = 401;
-  var REQUEST_STATUS_NOT_FOUND = 404;
-  var REQUEST_STATUS_INTERNAL_SERVER_ERROR = 500; */
 
   window.backend = {
     performRequest: function (URL, method, data, onLoad, onError) {

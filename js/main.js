@@ -45,13 +45,6 @@
   }
 
   function onSuccessLoad(response) {
-    // delete response[1].offer; // For testing purposes only
-    // response[1].offer.features = []; // For testing purposes only
-    // delete response[1].location; // For testing purposes only
-    // delete response[1].author; // For testing purposes only
-    // delete response[1].author.avatar; // For testing purposes only
-    // delete response[1].location.y; // For testing purposes only
-
     window.main.loadedData = response;
     window.pin.renderPinsForApartments(response);
     window.form.enableFormFields(window.form.mapFiltersForm);

@@ -7,26 +7,19 @@
     HOUSE: 5000,
     PALACE: 10000
   };
-  /* var MIN_PRICE_FOR_BUNGALO = 0;
-  var MIN_PRICE_FOR_FLAT = 1000;
-  var MIN_PRICE_FOR_HOUSE = 5000;
-  var MIN_PRICE_FOR_PALACE = 10000; */
+
   var NumberOfRooms = {
     ROOM_1: '1',
     ROOMS_2: '2',
     ROOMS_3: '3',
     ROOMS_100: '100'
   };
-  /* var ROOM_1 = '1';
-  var ROOMS_2 = '2';
-  var ROOMS_3 = '3';
-  var ROOMS_100 = '100'; */
+
   var CAPACITY_0 = '0';
   var CAPACITY_1 = '1';
   var CAPACITY_2 = '2';
   var CAPACITY_3 = '3';
 
-  //var adForm = document.querySelector('.ad-form');
   var titleInput = window.data.adForm.querySelector('#title');
   var addressInput = window.data.adForm.querySelector('#address');
   var typeInput = window.data.adForm.querySelector('#type');
@@ -167,7 +160,6 @@
   }
 
   window.form = {
-    //adForm: adForm,
     mapFiltersForm: document.querySelector('.map__filters'),
     addressInput: addressInput,
 
