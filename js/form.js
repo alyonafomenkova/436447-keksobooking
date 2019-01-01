@@ -15,6 +15,13 @@
     ROOMS_100: '100'
   };
 
+  var ApartmentTypes = {
+    bungalo: 'bungalo',
+    flat: 'flat',
+    house: 'house',
+    palace: 'palace'
+  }
+
   var CAPACITY_0 = '0';
   var CAPACITY_1 = '1';
   var CAPACITY_2 = '2';
@@ -76,19 +83,19 @@
 
   function setMinPrice(apartmentType) {
     switch (apartmentType) {
-      case 'bungalo':
+      case ApartmentTypes.bungalo:
         priceInput.setAttribute('min', MinPriceApartment.BUNGALO);
         priceInput.setAttribute('placeholder', MinPriceApartment.BUNGALO);
         break;
-      case 'flat':
+      case ApartmentTypes.flat:
         priceInput.setAttribute('min', MinPriceApartment.FLAT);
         priceInput.setAttribute('placeholder', MinPriceApartment.FLAT);
         break;
-      case 'house':
+      case ApartmentTypes.house:
         priceInput.setAttribute('min', MinPriceApartment.HOUSE);
         priceInput.setAttribute('placeholder', MinPriceApartment.HOUSE);
         break;
-      case 'palace':
+      case ApartmentTypes.palace:
         priceInput.setAttribute('min', MinPriceApartment.PALACE);
         priceInput.setAttribute('placeholder', MinPriceApartment.PALACE);
         break;
