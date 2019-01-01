@@ -14,18 +14,18 @@
   var CAPACITY_2 = '2';
   var CAPACITY_3 = '3';
 
-  var adForm = document.querySelector('.ad-form');
-  var titleInput = adForm.querySelector('#title');
-  var addressInput = adForm.querySelector('#address');
-  var typeInput = adForm.querySelector('#type');
-  var priceInput = adForm.querySelector('#price');
-  var checkinInput = adForm.querySelector('#timein');
-  var checkoutInput = adForm.querySelector('#timeout');
-  var roomInput = adForm.querySelector('#room_number');
-  var capacityInput = adForm.querySelector('#capacity');
-  var features = adForm.querySelectorAll('.features input[type="checkbox"]');
-  var descriptionInput = adForm.querySelector('#description');
-  var clearButton = adForm.querySelector('.ad-form__reset');
+  //var adForm = document.querySelector('.ad-form');
+  var titleInput = window.data.adForm.querySelector('#title');
+  var addressInput = window.data.adForm.querySelector('#address');
+  var typeInput = window.data.adForm.querySelector('#type');
+  var priceInput = window.data.adForm.querySelector('#price');
+  var checkinInput = window.data.adForm.querySelector('#timein');
+  var checkoutInput = window.data.adForm.querySelector('#timeout');
+  var roomInput = window.data.adForm.querySelector('#room_number');
+  var capacityInput = window.data.adForm.querySelector('#capacity');
+  var features = window.data.adForm.querySelectorAll('.features input[type="checkbox"]');
+  var descriptionInput = window.data.adForm.querySelector('#description');
+  var clearButton = window.data.adForm.querySelector('.ad-form__reset');
   var errorMessageOneRoom = 'Можем принять только одного гостя';
   var errorMessageTwoRooms = 'Можем принять одного или двух гостей';
   var errorMessageThreeRooms = 'Можем принять одного, два или три гостя';
@@ -133,7 +133,7 @@
   }
 
   function onSuccessWindowEcsPress(evt) {
-    if (evt.keyCode === window.util.ESC) {
+    if (evt.keyCode === window.data.ESC) {
       closeSuccessWindow();
     }
   }
@@ -155,7 +155,7 @@
   }
 
   window.form = {
-    adForm: adForm,
+    //adForm: adForm,
     mapFiltersForm: document.querySelector('.map__filters'),
     addressInput: addressInput,
 
@@ -191,11 +191,11 @@
     validateCapacity();
   });
 
-  window.form.disableFormFields(window.form.adForm);
+  window.form.disableFormFields(window.data.adForm);
   window.form.disableFormFields(window.form.mapFiltersForm);
 
-  adForm.addEventListener('submit', function (evt) {
-    var formData = new FormData(adForm);
+  window.data.adForm.addEventListener('submit', function (evt) {
+    var formData = new FormData(window.data.adForm);
     window.backend.save(formData, onSuccessSave, window.main.onErrorLoading);
     evt.preventDefault();
   });

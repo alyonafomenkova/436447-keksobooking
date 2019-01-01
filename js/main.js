@@ -35,7 +35,7 @@
   }
 
   function onErrorWindowEcsPress(evt) {
-    if (evt.keyCode === window.util.ESC) {
+    if (evt.keyCode === window.data.ESC) {
       closeErrorWindow();
     }
   }
@@ -87,15 +87,15 @@
       window.main.isPageActive = true;
       window.form.setInputReadOnly(window.form.addressInput);
       map.classList.remove('map--faded');
-      window.form.adForm.classList.remove('ad-form--disabled');
-      window.form.enableFormFields(window.form.adForm);
+      window.data.adForm.classList.remove('ad-form--disabled');
+      window.form.enableFormFields(window.data.adForm);
       window.backend.load(onSuccessLoad, window.main.onErrorLoading);
     },
 
     deactivateMapAndForms: function () {
       window.main.map.classList.add('map--faded');
-      window.form.adForm.classList.add('ad-form--disabled');
-      window.form.disableFormFields(window.form.adForm);
+      window.data.adForm.classList.add('ad-form--disabled');
+      window.form.disableFormFields(window.data.adForm);
       window.form.disableFormFields(window.form.mapFiltersForm);
       window.card.destroyCard();
       window.main.isPageActive = false;

@@ -12,7 +12,7 @@
     return rand;
   } */
 
-  window.util = {
+  window.data = {
     ESC: KEY_CODE.ESC,
     adForm: adForm
 

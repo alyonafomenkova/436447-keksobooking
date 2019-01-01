@@ -84,7 +84,7 @@
   }
 
   function onCardCloseEcsPress(evt) {
-    if (evt.keyCode === window.util.ESC) {
+    if (evt.keyCode === window.data.ESC) {
       window.card.destroyCard();
       window.pin.disablePreviousPin();
       document.removeEventListener('keydown', onCardCloseEcsPress);

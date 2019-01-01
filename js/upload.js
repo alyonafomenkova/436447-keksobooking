@@ -7,12 +7,12 @@
     HEIGHT: '70px'
   };
 
-  var fileChooserAvatar = window.util.adForm.querySelector('.ad-form-header__input');
-  var previewAvatar = window.util.adForm.querySelector('.ad-form-header__preview img');
+  var fileChooserAvatar = window.data.adForm.querySelector('.ad-form-header__input');
+  var previewAvatar = window.data.adForm.querySelector('.ad-form-header__preview img');
   var defaultAvatar = getDefaultAvatar();
-  var fileChooserPhotos = window.util.adForm.querySelector('.ad-form__input');
-  var photosContainer = window.util.adForm.querySelector('.ad-form__photo-container');
-  var previewPhoto = window.util.adForm.querySelector('.ad-form__photo');
+  var fileChooserPhotos = window.data.adForm.querySelector('.ad-form__input');
+  var photosContainer = window.data.adForm.querySelector('.ad-form__photo-container');
+  var previewPhoto = window.data.adForm.querySelector('.ad-form__photo');
   var isFirstUploading = true;
 
   function resetFileInput(input) {
