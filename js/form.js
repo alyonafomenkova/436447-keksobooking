@@ -11,10 +11,16 @@
   var MIN_PRICE_FOR_FLAT = 1000;
   var MIN_PRICE_FOR_HOUSE = 5000;
   var MIN_PRICE_FOR_PALACE = 10000; */
-  var ROOM_1 = '1';
+  var NumberOfRooms = {
+    ROOM_1: '1',
+    ROOMS_2: '2',
+    ROOMS_3: '3',
+    ROOMS_100: '100'
+  };
+  /* var ROOM_1 = '1';
   var ROOMS_2 = '2';
   var ROOMS_3 = '3';
-  var ROOMS_100 = '100';
+  var ROOMS_100 = '100'; */
   var CAPACITY_0 = '0';
   var CAPACITY_1 = '1';
   var CAPACITY_2 = '2';
@@ -55,13 +61,13 @@
     var capacity = capacityInput.value;
     var message;
 
-    if (rooms === ROOM_1) {
+    if (rooms === NumberOfRooms.ROOM_1) {
       message = capacity === CAPACITY_1 ? '' : errorMessageOneRoom;
 
-    } else if (rooms === ROOMS_2) {
+    } else if (rooms === NumberOfRooms.ROOMS_2) {
       message = capacity === CAPACITY_1 || capacity === CAPACITY_2 ? '' : errorMessageTwoRooms;
 
-    } else if (rooms === ROOMS_3) {
+    } else if (rooms === NumberOfRooms.ROOMS_3) {
       message = capacity === CAPACITY_1 || capacity === CAPACITY_2 || capacity === CAPACITY_3 ? '' : errorMessageThreeRooms;
 
     } else {
@@ -69,10 +75,10 @@
     }
 
     capacityInput.setCustomValidity(message);
-    threeGuestsOption.disabled = rooms !== ROOMS_3;
-    twoGuestsOption.disabled = rooms === ROOM_1 || rooms === ROOMS_100;
-    oneGuestOption.disabled = rooms === ROOMS_100;
-    noGuestsOption.disabled = rooms !== ROOMS_100;
+    threeGuestsOption.disabled = rooms !== NumberOfRooms.ROOMS_3;
+    twoGuestsOption.disabled = rooms === NumberOfRooms.ROOM_1 || rooms === NumberOfRooms.ROOMS_100;
+    oneGuestOption.disabled = rooms === NumberOfRooms.ROOMS_100;
+    noGuestsOption.disabled = rooms !== NumberOfRooms.ROOMS_100;
   }
 
   function setMinPrice(apartmentType) {
