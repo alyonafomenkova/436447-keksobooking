@@ -1,10 +1,16 @@
 'use strict';
 
 (function () {
-  var MIN_PRICE_FOR_BUNGALO = 0;
+  var MinPriceApartment = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
+  };
+  /* var MIN_PRICE_FOR_BUNGALO = 0;
   var MIN_PRICE_FOR_FLAT = 1000;
   var MIN_PRICE_FOR_HOUSE = 5000;
-  var MIN_PRICE_FOR_PALACE = 10000;
+  var MIN_PRICE_FOR_PALACE = 10000; */
   var ROOM_1 = '1';
   var ROOMS_2 = '2';
   var ROOMS_3 = '3';
@@ -72,20 +78,20 @@
   function setMinPrice(apartmentType) {
     switch (apartmentType) {
       case 'bungalo':
-        priceInput.setAttribute('min', MIN_PRICE_FOR_BUNGALO);
-        priceInput.setAttribute('placeholder', MIN_PRICE_FOR_BUNGALO);
+        priceInput.setAttribute('min', MinPriceApartment.BUNGALO);
+        priceInput.setAttribute('placeholder', MinPriceApartment.BUNGALO);
         break;
       case 'flat':
-        priceInput.setAttribute('min', MIN_PRICE_FOR_FLAT);
-        priceInput.setAttribute('placeholder', MIN_PRICE_FOR_FLAT);
+        priceInput.setAttribute('min', MinPriceApartment.FLAT);
+        priceInput.setAttribute('placeholder', MinPriceApartment.FLAT);
         break;
       case 'house':
-        priceInput.setAttribute('min', MIN_PRICE_FOR_HOUSE);
-        priceInput.setAttribute('placeholder', MIN_PRICE_FOR_HOUSE);
+        priceInput.setAttribute('min', MinPriceApartment.HOUSE);
+        priceInput.setAttribute('placeholder', MinPriceApartment.HOUSE);
         break;
       case 'palace':
-        priceInput.setAttribute('min', MIN_PRICE_FOR_PALACE);
-        priceInput.setAttribute('placeholder', MIN_PRICE_FOR_PALACE);
+        priceInput.setAttribute('min', MinPriceApartment.PALACE);
+        priceInput.setAttribute('placeholder', MinPriceApartment.PALACE);
         break;
     }
   }
@@ -100,7 +106,7 @@
     titleInput.value = '';
     addressInput.value = '';
     descriptionInput.value = '';
-    priceInput.value = MIN_PRICE_FOR_HOUSE;
+    priceInput.value = MinPriceApartment.HOUSE;
     resetFeatures();
     window.upload.resetPhotos();
     window.upload.setDefaultAvatar();
