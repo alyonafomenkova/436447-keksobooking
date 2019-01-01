@@ -4,26 +4,28 @@
   var KEY_CODE = {
     ESC: 27,
   };
+  var adForm = document.querySelector('.ad-form');
+
+/*   function getRandomInteger (min, max) {
+    var rand = min + Math.random() * (max + 1 - min);
+    rand = Math.floor(rand);
+    return rand;
+  } */
 
   window.util = {
     ESC: KEY_CODE.ESC,
+    adForm: adForm
 
-    getRandomInteger: function (min, max) {
-      var rand = min + Math.random() * (max + 1 - min);
-      rand = Math.floor(rand);
-      return rand;
-    },
-
-    getRandomString: function (arr) {
+/*     getRandomString: function (arr) {
       var rand = Math.floor(Math.random() * arr.length);
       return arr[rand];
-    },
+    }, */
 
-    concatenateStrings: function (a, b) {
+/*     concatenateStrings: function (a, b) {
       return a + ',' + b;
-    },
+    }, */
 
-    shuffleArray: function (arr) {
+/*     shuffleArray: function (arr) {
       var out = arr.slice(0);
       var j;
       var temp;
@@ -34,12 +36,12 @@
         out[i] = temp;
       }
       return out;
-    },
+    }, */
 
-    getRandomShuffledSubarray: function (arr) {
+/*     getRandomShuffledSubarray: function (arr) {
       var out = window.util.shuffleArray(arr);
-      var index = window.util.getRandomInteger(1, out.length);
+      var index = getRandomInteger(1, out.length);
       return out.slice(0, index);
-    }
+    } */
   };
 })();
