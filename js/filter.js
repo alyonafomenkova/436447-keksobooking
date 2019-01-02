@@ -11,11 +11,12 @@
     MIDDLE: 'middle',
     HIGH: 'high'
   };
-  var housingType = window.form.mapFiltersForm.querySelector('#housing-type');
-  var housingPrice = window.form.mapFiltersForm.querySelector('#housing-price');
-  var housingRooms = window.form.mapFiltersForm.querySelector('#housing-rooms');
-  var housingGuests = window.form.mapFiltersForm.querySelector('#housing-guests');
-  var housingFeatures = window.form.mapFiltersForm.querySelector('#housing-features');
+  var mapFiltersForm = document.querySelector('.map__filters');
+  var housingType = mapFiltersForm.querySelector('#housing-type');
+  var housingPrice = mapFiltersForm.querySelector('#housing-price');
+  var housingRooms = mapFiltersForm.querySelector('#housing-rooms');
+  var housingGuests = mapFiltersForm.querySelector('#housing-guests');
+  var housingFeatures = mapFiltersForm.querySelector('#housing-features');
 
   function getSelectedFeatures() {
     var checkedFeatureInputs = housingFeatures.querySelectorAll('input[type=checkbox]:checked');
@@ -95,6 +96,10 @@
     housingGuests.addEventListener('change', onFilterSelectorsChange);
     housingFeatures.addEventListener('change', onFilterSelectorsChange);
   }
+
+  window.filter = {
+    mapFiltersForm: mapFiltersForm
+  };
 
   initializeFilterSelectors();
 })();

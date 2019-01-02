@@ -167,7 +167,6 @@
   }
 
   window.form = {
-    mapFiltersForm: document.querySelector('.map__filters'),
     addressInput: addressInput,
 
     enableFormFields: function (formName) {
@@ -203,7 +202,7 @@
   });
 
   window.form.disableFormFields(window.data.adForm);
-  window.form.disableFormFields(window.form.mapFiltersForm);
+  window.form.disableFormFields(window.filter.mapFiltersForm);
 
   window.data.adForm.addEventListener('submit', function (evt) {
     var formData = new FormData(window.data.adForm);

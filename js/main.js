@@ -47,7 +47,7 @@
   function onSuccessLoad(response) {
     window.main.loadedData = response;
     window.pin.renderPinsForApartments(response);
-    window.form.enableFormFields(window.form.mapFiltersForm);
+    window.form.enableFormFields(window.filter.mapFiltersForm);
   }
 
   window.main = {
@@ -89,7 +89,7 @@
       window.main.map.classList.add('map--faded');
       window.data.adForm.classList.add('ad-form--disabled');
       window.form.disableFormFields(window.data.adForm);
-      window.form.disableFormFields(window.form.mapFiltersForm);
+      window.form.disableFormFields(window.filter.mapFiltersForm);
       window.card.destroyCard();
       window.main.isPageActive = false;
       window.main.clearPins();
