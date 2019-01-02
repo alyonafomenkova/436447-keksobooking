@@ -68,6 +68,7 @@
     updateAddress: function () {
       var address = window.map.getPinX() - window.map.mapX() + ', ' + window.map.getPinY();
       window.form.addressInput.value = address;
+      console.log('window.form.addressInput.value: ', window.form.addressInput.value);////////
     },
 
     clearPins: function () {
