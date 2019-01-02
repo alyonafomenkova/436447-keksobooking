@@ -3,39 +3,41 @@
 (function () {
   var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
   var URL_SAVE = 'https://js.dump.academy/keksobooking';
-  var REQUEST_TIMEOUT = 10000;
-  var REQUEST_STATUS_OK = 200;
-  var REQUEST_STATUS_BAD_REQUEST = 400;
-  var REQUEST_STATUS_UNAUTHORIZED = 401;
-  var REQUEST_STATUS_NOT_FOUND = 404;
-  var REQUEST_STATUS_INTERNAL_SERVER_ERROR = 500;
+  var RequestStatus = {
+    TIMEOUT: 10000,
+    OK: 200,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR: 500
+  };
 
   window.backend = {
     performRequest: function (URL, method, data, onLoad, onError) {
       var xhr = new XMLHttpRequest();
-      xhr.timeout = REQUEST_TIMEOUT;
+      xhr.timeout = RequestStatus.TIMEOUT;
       xhr.responseType = 'json';
       xhr.open(method, URL);
 
       xhr.addEventListener('load', function () {
         switch (xhr.status) {
-          case REQUEST_STATUS_OK:
+          case RequestStatus.OK:
             onLoad(xhr.response);
             break;
-          case REQUEST_STATUS_BAD_REQUEST:
-            onError('Некорректный запрос. ' + 'Код ошибки: ' + xhr.status);
+          case RequestStatus.BAD_REQUEST:
+            onError('Некорректный запрос. Код ошибки: ' + xhr.status);
             break;
-          case REQUEST_STATUS_NOT_FOUND:
-            onError('Страница не найдена. ' + 'Код ошибки: ' + xhr.status);
+          case RequestStatus.NOT_FOUND:
+            onError('Страница не найдена. Код ошибки: ' + xhr.status);
             break;
-          case REQUEST_STATUS_UNAUTHORIZED:
-            onError('Пользователь неавторизован. ' + 'Код ошибки: ' + xhr.status);
+          case RequestStatus.UNAUTHORIZED:
+            onError('Пользователь неавторизован. Код ошибки: ' + xhr.status);
             break;
-          case REQUEST_STATUS_INTERNAL_SERVER_ERROR:
-            onError('Внутренняя ошибка сервера. ' + 'Код ошибки: ' + xhr.status);
+          case RequestStatus.INTERNAL_SERVER_ERROR:
+            onError('Внутренняя ошибка сервера. Код ошибки: ' + xhr.status);
             break;
           default:
-            onError('Произошла ошибка при загрузке персонажа. Повторите попытку позже. ' + 'код ошибки: ' + xhr.status);
+            onError('Произошла ошибка при загрузке персонажа. Повторите попытку позже. Код ошибки: ' + xhr.status);
         }
       });
 

@@ -7,13 +7,12 @@
     HEIGHT: '70px'
   };
 
-  var adForm = document.querySelector('.ad-form');
-  var fileChooserAvatar = adForm.querySelector('.ad-form-header__input');
-  var previewAvatar = adForm.querySelector('.ad-form-header__preview img');
+  var fileChooserAvatar = window.data.adForm.querySelector('.ad-form-header__input');
+  var previewAvatar = window.data.adForm.querySelector('.ad-form-header__preview img');
   var defaultAvatar = getDefaultAvatar();
-  var fileChooserPhotos = adForm.querySelector('.ad-form__input');
-  var photosContainer = adForm.querySelector('.ad-form__photo-container');
-  var previewPhoto = adForm.querySelector('.ad-form__photo');
+  var fileChooserPhotos = window.data.adForm.querySelector('.ad-form__input');
+  var photosContainer = window.data.adForm.querySelector('.ad-form__photo-container');
+  var previewPhoto = window.data.adForm.querySelector('.ad-form__photo');
   var isFirstUploading = true;
 
   function resetFileInput(input) {

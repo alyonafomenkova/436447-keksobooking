@@ -35,7 +35,7 @@
   }
 
   function onErrorWindowEcsPress(evt) {
-    if (evt.keyCode === window.util.ESC) {
+    if (evt.keyCode === window.data.ESC) {
       closeErrorWindow();
     }
   }
@@ -45,16 +45,9 @@
   }
 
   function onSuccessLoad(response) {
-    // delete response[1].offer; // For testing purposes only
-    // response[1].offer.features = []; // For testing purposes only
-    // delete response[1].location; // For testing purposes only
-    // delete response[1].author; // For testing purposes only
-    // delete response[1].author.avatar; // For testing purposes only
-    // delete response[1].location.y; // For testing purposes only
-
     window.main.loadedData = response;
     window.pin.renderPinsForApartments(response);
-    window.form.enableFormFields(window.form.mapFiltersForm);
+    window.form.enableFormFields(window.filter.mapFiltersForm);
   }
 
   window.main = {
@@ -87,16 +80,16 @@
       window.main.isPageActive = true;
       window.form.setInputReadOnly(window.form.addressInput);
       map.classList.remove('map--faded');
-      window.form.adForm.classList.remove('ad-form--disabled');
-      window.form.enableFormFields(window.form.adForm);
+      window.data.adForm.classList.remove('ad-form--disabled');
+      window.form.enableFormFields(window.data.adForm);
       window.backend.load(onSuccessLoad, window.main.onErrorLoading);
     },
 
     deactivateMapAndForms: function () {
       window.main.map.classList.add('map--faded');
-      window.form.adForm.classList.add('ad-form--disabled');
-      window.form.disableFormFields(window.form.adForm);
-      window.form.disableFormFields(window.form.mapFiltersForm);
+      window.data.adForm.classList.add('ad-form--disabled');
+      window.form.disableFormFields(window.data.adForm);
+      window.form.disableFormFields(window.filter.mapFiltersForm);
       window.card.destroyCard();
       window.main.isPageActive = false;
       window.main.clearPins();

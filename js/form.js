@@ -1,31 +1,43 @@
 'use strict';
 
 (function () {
-  var MIN_PRICE_FOR_BUNGALO = 0;
-  var MIN_PRICE_FOR_FLAT = 1000;
-  var MIN_PRICE_FOR_HOUSE = 5000;
-  var MIN_PRICE_FOR_PALACE = 10000;
-  var ROOM_1 = '1';
-  var ROOMS_2 = '2';
-  var ROOMS_3 = '3';
-  var ROOMS_100 = '100';
+  var MinPriceApartment = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
+  };
+
+  var NumberOfRooms = {
+    ROOM_1: '1',
+    ROOMS_2: '2',
+    ROOMS_3: '3',
+    ROOMS_100: '100'
+  };
+
+  var ApartmentsType = {
+    bungalo: 'bungalo',
+    flat: 'flat',
+    house: 'house',
+    palace: 'palace'
+  };
+
   var CAPACITY_0 = '0';
   var CAPACITY_1 = '1';
   var CAPACITY_2 = '2';
   var CAPACITY_3 = '3';
 
-  var adForm = document.querySelector('.ad-form');
-  var titleInput = adForm.querySelector('#title');
-  var addressInput = adForm.querySelector('#address');
-  var typeInput = adForm.querySelector('#type');
-  var priceInput = adForm.querySelector('#price');
-  var checkinInput = adForm.querySelector('#timein');
-  var checkoutInput = adForm.querySelector('#timeout');
-  var roomInput = adForm.querySelector('#room_number');
-  var capacityInput = adForm.querySelector('#capacity');
-  var features = adForm.querySelectorAll('.features input[type="checkbox"]');
-  var descriptionInput = adForm.querySelector('#description');
-  var clearButton = adForm.querySelector('.ad-form__reset');
+  var titleInput = window.data.adForm.querySelector('#title');
+  var addressInput = window.data.adForm.querySelector('#address');
+  var typeInput = window.data.adForm.querySelector('#type');
+  var priceInput = window.data.adForm.querySelector('#price');
+  var checkinInput = window.data.adForm.querySelector('#timein');
+  var checkoutInput = window.data.adForm.querySelector('#timeout');
+  var roomInput = window.data.adForm.querySelector('#room_number');
+  var capacityInput = window.data.adForm.querySelector('#capacity');
+  var features = window.data.adForm.querySelectorAll('.features input[type="checkbox"]');
+  var descriptionInput = window.data.adForm.querySelector('#description');
+  var clearButton = window.data.adForm.querySelector('.ad-form__reset');
   var errorMessageOneRoom = 'Можем принять только одного гостя';
   var errorMessageTwoRooms = 'Можем принять одного или двух гостей';
   var errorMessageThreeRooms = 'Можем принять одного, два или три гостя';
@@ -49,13 +61,13 @@
     var capacity = capacityInput.value;
     var message;
 
-    if (rooms === ROOM_1) {
+    if (rooms === NumberOfRooms.ROOM_1) {
       message = capacity === CAPACITY_1 ? '' : errorMessageOneRoom;
 
-    } else if (rooms === ROOMS_2) {
+    } else if (rooms === NumberOfRooms.ROOMS_2) {
       message = capacity === CAPACITY_1 || capacity === CAPACITY_2 ? '' : errorMessageTwoRooms;
 
-    } else if (rooms === ROOMS_3) {
+    } else if (rooms === NumberOfRooms.ROOMS_3) {
       message = capacity === CAPACITY_1 || capacity === CAPACITY_2 || capacity === CAPACITY_3 ? '' : errorMessageThreeRooms;
 
     } else {
@@ -63,29 +75,29 @@
     }
 
     capacityInput.setCustomValidity(message);
-    threeGuestsOption.disabled = rooms !== ROOMS_3;
-    twoGuestsOption.disabled = rooms === ROOM_1 || rooms === ROOMS_100;
-    oneGuestOption.disabled = rooms === ROOMS_100;
-    noGuestsOption.disabled = rooms !== ROOMS_100;
+    threeGuestsOption.disabled = rooms !== NumberOfRooms.ROOMS_3;
+    twoGuestsOption.disabled = rooms === NumberOfRooms.ROOM_1 || rooms === NumberOfRooms.ROOMS_100;
+    oneGuestOption.disabled = rooms === NumberOfRooms.ROOMS_100;
+    noGuestsOption.disabled = rooms !== NumberOfRooms.ROOMS_100;
   }
 
   function setMinPrice(apartmentType) {
     switch (apartmentType) {
-      case 'bungalo':
-        priceInput.setAttribute('min', MIN_PRICE_FOR_BUNGALO);
-        priceInput.setAttribute('placeholder', MIN_PRICE_FOR_BUNGALO);
+      case ApartmentsType.bungalo:
+        priceInput.setAttribute('min', MinPriceApartment.BUNGALO);
+        priceInput.setAttribute('placeholder', MinPriceApartment.BUNGALO);
         break;
-      case 'flat':
-        priceInput.setAttribute('min', MIN_PRICE_FOR_FLAT);
-        priceInput.setAttribute('placeholder', MIN_PRICE_FOR_FLAT);
+      case ApartmentsType.flat:
+        priceInput.setAttribute('min', MinPriceApartment.FLAT);
+        priceInput.setAttribute('placeholder', MinPriceApartment.FLAT);
         break;
-      case 'house':
-        priceInput.setAttribute('min', MIN_PRICE_FOR_HOUSE);
-        priceInput.setAttribute('placeholder', MIN_PRICE_FOR_HOUSE);
+      case ApartmentsType.house:
+        priceInput.setAttribute('min', MinPriceApartment.HOUSE);
+        priceInput.setAttribute('placeholder', MinPriceApartment.HOUSE);
         break;
-      case 'palace':
-        priceInput.setAttribute('min', MIN_PRICE_FOR_PALACE);
-        priceInput.setAttribute('placeholder', MIN_PRICE_FOR_PALACE);
+      case ApartmentsType.palace:
+        priceInput.setAttribute('min', MinPriceApartment.PALACE);
+        priceInput.setAttribute('placeholder', MinPriceApartment.PALACE);
         break;
     }
   }
@@ -100,13 +112,15 @@
     titleInput.value = '';
     addressInput.value = '';
     descriptionInput.value = '';
-    priceInput.value = MIN_PRICE_FOR_HOUSE;
+    priceInput.value = MinPriceApartment.HOUSE;
     resetFeatures();
+    window.filter.resetCheckboxes();
     window.upload.resetPhotos();
     window.upload.setDefaultAvatar();
   }
 
   function setDefaultSelects() {
+    window.filter.setDefaultSelectsOnFilterForm();
     roomInput.selectedIndex = defaultRoomInputIndex;
     typeInput.selectedIndex = defaultTypeInputIndex;
     checkinInput.selectedIndex = defaultCheckinInputIndex;
@@ -133,7 +147,7 @@
   }
 
   function onSuccessWindowEcsPress(evt) {
-    if (evt.keyCode === window.util.ESC) {
+    if (evt.keyCode === window.data.ESC) {
       closeSuccessWindow();
     }
   }
@@ -146,7 +160,8 @@
     document.addEventListener('keydown', onSuccessWindowEcsPress);
   }
 
-  function onClearForm() {
+  function onClearForm(evt) {
+    evt.preventDefault();
     resetInput();
     window.upload.resetFileInput(window.upload.fileChooserAvatar);
     window.upload.resetFileInput(window.upload.fileChooserPhotos);
@@ -155,8 +170,6 @@
   }
 
   window.form = {
-    adForm: adForm,
-    mapFiltersForm: document.querySelector('.map__filters'),
     addressInput: addressInput,
 
     enableFormFields: function (formName) {
@@ -191,11 +204,11 @@
     validateCapacity();
   });
 
-  window.form.disableFormFields(window.form.adForm);
-  window.form.disableFormFields(window.form.mapFiltersForm);
+  window.form.disableFormFields(window.data.adForm);
+  window.form.disableFormFields(window.filter.mapFiltersForm);
 
-  adForm.addEventListener('submit', function (evt) {
-    var formData = new FormData(adForm);
+  window.data.adForm.addEventListener('submit', function (evt) {
+    var formData = new FormData(window.data.adForm);
     window.backend.save(formData, onSuccessSave, window.main.onErrorLoading);
     evt.preventDefault();
   });
