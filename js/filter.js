@@ -108,7 +108,7 @@
     });
   }
 
-  function setDefaultSelectsOnFilterForm () {
+  function setDefaultSelectsOnFilterForm() {
     housingType.selectedIndex = defaultHousingTypeIndex;
     housingPrice.selectedIndex = defaultHousingPriceIndex;
     housingRooms.selectedIndex = defaultHousingRoomsIndex;

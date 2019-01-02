@@ -20,7 +20,7 @@
     flat: 'flat',
     house: 'house',
     palace: 'palace'
-  }
+  };
 
   var CAPACITY_0 = '0';
   var CAPACITY_1 = '1';
