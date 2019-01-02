@@ -160,7 +160,8 @@
     document.addEventListener('keydown', onSuccessWindowEcsPress);
   }
 
-  function onClearForm() {
+  function onClearForm(evt) {
+    evt.preventDefault();
     resetInput();
     window.upload.resetFileInput(window.upload.fileChooserAvatar);
     window.upload.resetFileInput(window.upload.fileChooserPhotos);
