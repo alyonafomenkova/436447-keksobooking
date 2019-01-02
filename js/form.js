@@ -114,11 +114,13 @@
     descriptionInput.value = '';
     priceInput.value = MinPriceApartment.HOUSE;
     resetFeatures();
+    window.filter.resetCheckboxes();
     window.upload.resetPhotos();
     window.upload.setDefaultAvatar();
   }
 
   function setDefaultSelects() {
+    window.filter.setDefaultSelectsOnFilterForm();
     roomInput.selectedIndex = defaultRoomInputIndex;
     typeInput.selectedIndex = defaultTypeInputIndex;
     checkinInput.selectedIndex = defaultCheckinInputIndex;

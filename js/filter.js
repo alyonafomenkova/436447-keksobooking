@@ -17,6 +17,10 @@
   var housingRooms = mapFiltersForm.querySelector('#housing-rooms');
   var housingGuests = mapFiltersForm.querySelector('#housing-guests');
   var housingFeatures = mapFiltersForm.querySelector('#housing-features');
+  var defaultHousingTypeIndex = housingType.selectedIndex;
+  var defaultHousingPriceIndex = housingPrice.selectedIndex;
+  var defaultHousingRoomsIndex = housingRooms.selectedIndex;
+  var defaultHousingGuestsIndex = housingGuests.selectedIndex;
 
   function getSelectedFeatures() {
     var checkedFeatureInputs = housingFeatures.querySelectorAll('input[type=checkbox]:checked');
@@ -97,8 +101,24 @@
     housingFeatures.addEventListener('change', onFilterSelectorsChange);
   }
 
+  function resetCheckboxes() {
+    var checkedFeatureInputs = housingFeatures.querySelectorAll('input[type=checkbox]:checked');
+    checkedFeatureInputs.forEach(function (element) {
+      element.checked = false;
+    });
+  }
+
+  function setDefaultSelectsOnFilterForm () {
+    housingType.selectedIndex = defaultHousingTypeIndex;
+    housingPrice.selectedIndex = defaultHousingPriceIndex;
+    housingRooms.selectedIndex = defaultHousingRoomsIndex;
+    housingGuests.selectedIndex = defaultHousingGuestsIndex;
+  }
+
   window.filter = {
-    mapFiltersForm: mapFiltersForm
+    mapFiltersForm: mapFiltersForm,
+    resetCheckboxes: resetCheckboxes,
+    setDefaultSelectsOnFilterForm: setDefaultSelectsOnFilterForm
   };
 
   initializeFilterSelectors();
