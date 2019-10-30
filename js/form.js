@@ -163,8 +163,8 @@
   function onClearForm(evt) {
     evt.preventDefault();
     resetInput();
-    window.upload.resetFileInput(window.upload.fileChooserAvatar);
-    window.upload.resetFileInput(window.upload.fileChooserPhotos);
+    window.upload.resetFileInput(window.upload.avatarInput);
+    window.upload.resetFileInput(window.upload.uploadPhotosInput);
     setDefaultSelects();
     window.main.deactivateMapAndForms();
   }
@@ -215,6 +215,4 @@
 
   clearButton.addEventListener('click', onClearForm);
   clearButton.addEventListener('keydown', onClearForm);
-  window.upload.uploadAvatar();
-  window.upload.uploadPhotos();
 })();
